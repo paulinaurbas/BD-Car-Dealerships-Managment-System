@@ -1,2 +1,16 @@
 # BD-Car-Dealerships-Managment-System
-University project from Data Base. Topic: System for managing a network of car dealerships
+Web app 
+Topic: System for managing a network of car dealerships
+
+## Technology
+- .NET
+- VS2019
+- C#
+- SQLServer
+
+## Team
+- Michał Herjan 
+- Michał Lampel
+- Franek Pogodziński
+- Michał Szopa
+- Paulina Urbaś
