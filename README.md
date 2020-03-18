@@ -1,5 +1,4 @@
 # BD-Car-Dealerships-Managment-System
-Web app 
 Topic: System for managing a network of car dealerships
 
 ## Technology
