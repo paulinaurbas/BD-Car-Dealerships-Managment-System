@@ -8,8 +8,10 @@ Topic: System for managing a network of car dealerships
 - SQLServer
 
 ## Team
+- Dominik Bistyga
 - Michał Herjan 
 - Michał Lampel
 - Franek Pogodziński
 - Michał Szopa
 - Paulina Urbaś
+- Paweł Zawierucha
