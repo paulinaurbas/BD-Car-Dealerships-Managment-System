@@ -30,14 +30,22 @@
           <Property Name="AccessFailedCount" Type="int" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
         </EntityType>
+        <EntityType Name="Manager">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdPerson" Type="int" Nullable="false" />
+          <Property Name="IdDealershipSalon" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Person">
           <Key>
-            <PropertyRef Name="Id_person" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id_person" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Surname" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Id_asp_net_users" Type="nvarchar" MaxLength="128" />
+          <Property Name="IdAspNetUsers" Type="nvarchar" MaxLength="128" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
@@ -53,7 +61,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_dbo_Person_dbo_Person_Id_asp_net_users">
+        <Association Name="FK_dbo_Person_dbo_Person_IdAspNetUsers">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
           <End Role="Person" Type="Self.Person" Multiplicity="*" />
           <ReferentialConstraint>
@@ -61,41 +69,78 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Person">
-              <PropertyRef Name="Id_asp_net_users" />
+              <PropertyRef Name="IdAspNetUsers" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dboManager_dbo_Manager_IdPerson">
+          <End Role="Person" Type="Self.Person" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Manager" Type="Self.Manager" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Manager">
+              <PropertyRef Name="IdPerson" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="ModelStoreContainer">
           <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Manager" EntityType="Self.Manager" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Person" EntityType="Self.Person" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
           </AssociationSet>
-          <AssociationSet Name="FK_dbo_Person_dbo_Person_Id_asp_net_users" Association="Self.FK_dbo_Person_dbo_Person_Id_asp_net_users">
+          <AssociationSet Name="FK_dbo_Person_dbo_Person_IdAspNetUsers" Association="Self.FK_dbo_Person_dbo_Person_IdAspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="Person" EntitySet="Person" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dboManager_dbo_Manager_IdPerson" Association="Self.FK_dboManager_dbo_Manager_IdPerson">
+            <End Role="Person" EntitySet="Person" />
+            <End Role="Manager" EntitySet="Manager" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AspNetUserRoles" EntityType="Model.AspNetUserRoles" />
+          <EntitySet Name="AspNetUsers" EntityType="Model.AspNetUsers" />
+          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Model.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <EntitySet Name="Person" EntityType="Model.Person" />
+          <AssociationSet Name="FK_dbo_Person_dbo_Person_IdAspNetUsers" Association="Model.FK_dbo_Person_dbo_Person_IdAspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Person" EntitySet="Person" />
+          </AssociationSet>
+          <EntitySet Name="Manager" EntityType="Model.Manager" />
+          <AssociationSet Name="FK_dboManager_dbo_Manager_IdPerson" Association="Model.FK_dboManager_dbo_Manager_IdPerson">
+            <End Role="Person" EntitySet="Person" />
+            <End Role="Manager" EntitySet="Manager" />
+          </AssociationSet>
+        </EntityContainer>
         <EntityType Name="AspNetUserRoles">
           <Key>
             <PropertyRef Name="UserId" />
             <PropertyRef Name="RoleId" />
           </Key>
-          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="RoleId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" FromRole="AspNetUserRoles" ToRole="AspNetUsers" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RoleId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Model.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" FromRole="AspNetUserRoles" ToRole="AspNetUsers" />
         </EntityType>
         <EntityType Name="AspNetUsers">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
           <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -106,15 +151,15 @@
           <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
           <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
           <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
-          <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="AspNetUserRoles" Relationship="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserRoles" />
-          <NavigationProperty Name="Person" Relationship="Model.FK_dbo_Person_dbo_Person_Id_asp_net_users" FromRole="AspNetUsers" ToRole="Person" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUserRoles" Relationship="Model.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserRoles" />
+          <NavigationProperty Name="Person" Relationship="Model.FK_dbo_Person_dbo_Person_IdAspNetUsers" FromRole="AspNetUsers" ToRole="Person" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+          <End Type="Model.AspNetUsers" Role="AspNetUsers" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <End Type="Model.AspNetUserRoles" Role="AspNetUserRoles" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AspNetUsers">
               <PropertyRef Name="Id" />
@@ -124,30 +169,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" />
-          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" />
-          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
-          </AssociationSet>
-          <EntitySet Name="Person" EntityType="Model.Person" />
-          <AssociationSet Name="FK_dbo_Person_dbo_Person_Id_asp_net_users" Association="Model.FK_dbo_Person_dbo_Person_Id_asp_net_users">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="Person" EntitySet="Person" />
-          </AssociationSet>
-        </EntityContainer>
         <EntityType Name="Person">
           <Key>
-            <PropertyRef Name="Id_person" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id_person" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Surname" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Id_asp_net_users" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AspNetUsers" Relationship="Model.FK_dbo_Person_dbo_Person_Id_asp_net_users" FromRole="Person" ToRole="AspNetUsers" />
+          <Property Name="IdAspNetUsers" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Model.FK_dbo_Person_dbo_Person_IdAspNetUsers" FromRole="Person" ToRole="AspNetUsers" />
+          <NavigationProperty Name="Manager" Relationship="Model.FK_dboManager_dbo_Manager_IdPerson" FromRole="Person" ToRole="Manager" />
         </EntityType>
-        <Association Name="FK_dbo_Person_dbo_Person_Id_asp_net_users">
+        <Association Name="FK_dbo_Person_dbo_Person_IdAspNetUsers">
           <End Type="Model.AspNetUsers" Role="AspNetUsers" Multiplicity="0..1" />
           <End Type="Model.Person" Role="Person" Multiplicity="*" />
           <ReferentialConstraint>
@@ -155,7 +188,30 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Person">
-              <PropertyRef Name="Id_asp_net_users" />
+              <PropertyRef Name="IdAspNetUsers" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Manager">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdPerson" Type="Int32" Nullable="false" />
+          <Property Name="IdDealershipSalon" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Person" Relationship="Model.FK_dboManager_dbo_Manager_IdPerson" FromRole="Manager" ToRole="Person" />
+        </EntityType>
+        <Association Name="FK_dboManager_dbo_Manager_IdPerson">
+          <End Type="Model.Person" Role="Person" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model.Manager" Role="Manager" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Manager">
+              <PropertyRef Name="IdPerson" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -168,36 +224,45 @@
           <EntitySetMapping Name="AspNetUserRoles">
             <EntityTypeMapping TypeName="Model.AspNetUserRoles">
               <MappingFragment StoreEntitySet="AspNetUserRoles">
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUsers">
             <EntityTypeMapping TypeName="Model.AspNetUsers">
               <MappingFragment StoreEntitySet="AspNetUsers">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
-                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
-                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
-                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
-                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
-                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
-                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
-                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
-                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Person">
             <EntityTypeMapping TypeName="Model.Person">
               <MappingFragment StoreEntitySet="Person">
-                <ScalarProperty Name="Id_asp_net_users" ColumnName="Id_asp_net_users" />
+                <ScalarProperty Name="IdAspNetUsers" ColumnName="IdAspNetUsers" />
                 <ScalarProperty Name="Surname" ColumnName="Surname" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id_person" ColumnName="Id_person" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Manager">
+            <EntityTypeMapping TypeName="Model.Manager">
+              <MappingFragment StoreEntitySet="Manager">
+                <ScalarProperty Name="IdDealershipSalon" ColumnName="IdDealershipSalon" />
+                <ScalarProperty Name="IdPerson" ColumnName="IdPerson" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

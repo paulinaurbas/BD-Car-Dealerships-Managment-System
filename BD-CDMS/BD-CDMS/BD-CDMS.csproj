@@ -198,6 +198,9 @@
       <DependentUpon>DatabaseModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Manager.cs">
+      <DependentUpon>DatabaseModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Person.cs">
       <DependentUpon>DatabaseModel.tt</DependentUpon>
