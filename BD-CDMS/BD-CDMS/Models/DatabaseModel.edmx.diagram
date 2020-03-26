@@ -5,9 +5,11 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="be0e490d7a9848389682bdef960b10aa" Name="Diagram1">
-        <EntityTypeShape EntityType="Model.AspNetUserRoles" Width="1.5" PointX="3" PointY="2" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.AspNetUsers" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.AspNetUserRoles" Width="1.5" PointX="0.5" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.AspNetUsers" Width="1.5" PointX="2.125" PointY="0.5" IsExpanded="true" />
         <AssociationConnector Association="Model.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="Model.Person" Width="1.5" PointX="4.75" PointY="0.5" />
+        <AssociationConnector Association="Model.FK_dbo_Person_dbo_Person_Id_asp_net_users" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

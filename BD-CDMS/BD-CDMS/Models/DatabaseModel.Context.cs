@@ -27,5 +27,6 @@ namespace BD_CDMS.Models
     
         public virtual DbSet<AspNetUserRoles> AspNetUserRoles { get; set; }
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
+        public virtual DbSet<Person> Person { get; set; }
     }
 }
