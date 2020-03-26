@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29920.165
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BD-CDMS", "BD-CDMS\BD-CDMS.csproj", "{66732604-D79F-4EE6-BD85-1D717E1C14C3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{66732604-D79F-4EE6-BD85-1D717E1C14C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66732604-D79F-4EE6-BD85-1D717E1C14C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66732604-D79F-4EE6-BD85-1D717E1C14C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66732604-D79F-4EE6-BD85-1D717E1C14C3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9D235F57-7477-45E0-AC80-1376A9A76CCA}
+	EndGlobalSection
+EndGlobal
