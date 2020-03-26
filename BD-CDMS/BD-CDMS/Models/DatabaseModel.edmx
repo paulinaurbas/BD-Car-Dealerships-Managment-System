@@ -30,6 +30,43 @@
           <Property Name="AccessFailedCount" Type="int" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
         </EntityType>
+        <EntityType Name="Car">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Brand" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Model" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="VIN" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Color" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IdDealershipSalon" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdPerson" Type="int" Nullable="false" />
+          <Property Name="IdSeller" Type="int" />
+        </EntityType>
+        <EntityType Name="DealershipSalon">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PhoneNumber" Type="nchar" MaxLength="15" Nullable="false" />
+          <Property Name="Address" Type="nchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="nchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Issue">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdCar" Type="int" Nullable="false" />
+          <Property Name="IdServiceman" Type="int" />
+          <Property Name="Description" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="Manager">
           <Key>
             <PropertyRef Name="Id" />
@@ -37,6 +74,16 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IdPerson" Type="int" Nullable="false" />
           <Property Name="IdDealershipSalon" Type="int" Nullable="false" />
+          <Property Name="IdAspNetUser" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdCar" Type="int" Nullable="false" />
+          <Property Name="IdCustomer" Type="int" Nullable="false" />
+          <Property Name="Status" Type="varchar" MaxLength="20" Nullable="false" />
         </EntityType>
         <EntityType Name="Person">
           <Key>
@@ -45,7 +92,24 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Surname" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="IdAspNetUsers" Type="nvarchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="Seller">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdDealershipSalon" Type="int" Nullable="false" />
+          <Property Name="IdPerson" Type="int" Nullable="false" />
+          <Property Name="IdAspNetUser" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Serviceman">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdDealershipSalon" Type="int" Nullable="false" />
+          <Property Name="IdPerson" Type="int" Nullable="false" />
+          <Property Name="IdAspNetUser" Type="nvarchar" MaxLength="128" Nullable="false" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
@@ -61,15 +125,93 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_dbo_Person_dbo_Person_IdAspNetUsers">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
-          <End Role="Person" Type="Self.Person" Multiplicity="*" />
+        <Association Name="FK_dboCar_dbo_Car_IdDealershipSalon">
+          <End Role="DealershipSalon" Type="Self.DealershipSalon" Multiplicity="1" />
+          <End Role="Car" Type="Self.Car" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DealershipSalon">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Car">
+              <PropertyRef Name="IdDealershipSalon" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dboCustomer_dbo_Customer_IdPerson">
+          <End Role="Person" Type="Self.Person" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="IdPerson" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dboCustomer_dbo_Customer_IdSeller">
+          <End Role="Seller" Type="Self.Seller" Multiplicity="0..1" />
+          <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seller">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="IdSeller" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dboIssue_dbo_Issue_IdCar">
+          <End Role="Car" Type="Self.Car" Multiplicity="1" />
+          <End Role="Issue" Type="Self.Issue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Car">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Issue">
+              <PropertyRef Name="IdCar" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dboIssue_dbo_Issue_IdServiceman">
+          <End Role="Serviceman" Type="Self.Serviceman" Multiplicity="0..1" />
+          <End Role="Issue" Type="Self.Issue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Serviceman">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Issue">
+              <PropertyRef Name="IdServiceman" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dboManager_dbo_Manager_IdAspNetUser">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Manager" Type="Self.Manager" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AspNetUsers">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Person">
-              <PropertyRef Name="IdAspNetUsers" />
+            <Dependent Role="Manager">
+              <PropertyRef Name="IdAspNetUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dboManager_dbo_Manager_IdDealershipSalon">
+          <End Role="DealershipSalon" Type="Self.DealershipSalon" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Manager" Type="Self.Manager" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DealershipSalon">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Manager">
+              <PropertyRef Name="IdDealershipSalon" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -87,22 +229,177 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_dboOrder_dbo_Order_IdCar">
+          <End Role="Car" Type="Self.Car" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Car">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="IdCar" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dboOrder_dbo_Order_IdCustomer">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="IdCustomer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dboSeller_dbo_Seller_IdAspNetUser">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Seller" Type="Self.Seller" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Seller">
+              <PropertyRef Name="IdAspNetUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dboSeller_dbo_Seller_IdPerson">
+          <End Role="Person" Type="Self.Person" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Seller" Type="Self.Seller" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Seller">
+              <PropertyRef Name="IdPerson" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dboServiceman_dbo_Serviceman_IdAspNetUser">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Serviceman" Type="Self.Serviceman" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Serviceman">
+              <PropertyRef Name="IdAspNetUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dboServiceman_dbo_Serviceman_IdDealershipSalon">
+          <End Role="DealershipSalon" Type="Self.DealershipSalon" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Serviceman" Type="Self.Serviceman" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DealershipSalon">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Serviceman">
+              <PropertyRef Name="IdDealershipSalon" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dboServiceman_dbo_Serviceman_IdPerson">
+          <End Role="Person" Type="Self.Person" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Serviceman" Type="Self.Serviceman" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Serviceman">
+              <PropertyRef Name="IdPerson" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="ModelStoreContainer">
           <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Car" EntityType="Self.Car" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DealershipSalon" EntityType="Self.DealershipSalon" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Issue" EntityType="Self.Issue" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Manager" EntityType="Self.Manager" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Person" EntityType="Self.Person" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Seller" EntityType="Self.Seller" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Serviceman" EntityType="Self.Serviceman" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
           </AssociationSet>
-          <AssociationSet Name="FK_dbo_Person_dbo_Person_IdAspNetUsers" Association="Self.FK_dbo_Person_dbo_Person_IdAspNetUsers">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+          <AssociationSet Name="FK_dboCar_dbo_Car_IdDealershipSalon" Association="Self.FK_dboCar_dbo_Car_IdDealershipSalon">
+            <End Role="DealershipSalon" EntitySet="DealershipSalon" />
+            <End Role="Car" EntitySet="Car" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dboCustomer_dbo_Customer_IdPerson" Association="Self.FK_dboCustomer_dbo_Customer_IdPerson">
             <End Role="Person" EntitySet="Person" />
+            <End Role="Customer" EntitySet="Customer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dboCustomer_dbo_Customer_IdSeller" Association="Self.FK_dboCustomer_dbo_Customer_IdSeller">
+            <End Role="Seller" EntitySet="Seller" />
+            <End Role="Customer" EntitySet="Customer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dboIssue_dbo_Issue_IdCar" Association="Self.FK_dboIssue_dbo_Issue_IdCar">
+            <End Role="Car" EntitySet="Car" />
+            <End Role="Issue" EntitySet="Issue" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dboIssue_dbo_Issue_IdServiceman" Association="Self.FK_dboIssue_dbo_Issue_IdServiceman">
+            <End Role="Serviceman" EntitySet="Serviceman" />
+            <End Role="Issue" EntitySet="Issue" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dboManager_dbo_Manager_IdAspNetUser" Association="Self.FK_dboManager_dbo_Manager_IdAspNetUser">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Manager" EntitySet="Manager" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dboManager_dbo_Manager_IdDealershipSalon" Association="Self.FK_dboManager_dbo_Manager_IdDealershipSalon">
+            <End Role="DealershipSalon" EntitySet="DealershipSalon" />
+            <End Role="Manager" EntitySet="Manager" />
           </AssociationSet>
           <AssociationSet Name="FK_dboManager_dbo_Manager_IdPerson" Association="Self.FK_dboManager_dbo_Manager_IdPerson">
             <End Role="Person" EntitySet="Person" />
             <End Role="Manager" EntitySet="Manager" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dboOrder_dbo_Order_IdCar" Association="Self.FK_dboOrder_dbo_Order_IdCar">
+            <End Role="Car" EntitySet="Car" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dboOrder_dbo_Order_IdCustomer" Association="Self.FK_dboOrder_dbo_Order_IdCustomer">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dboSeller_dbo_Seller_IdAspNetUser" Association="Self.FK_dboSeller_dbo_Seller_IdAspNetUser">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Seller" EntitySet="Seller" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dboSeller_dbo_Seller_IdPerson" Association="Self.FK_dboSeller_dbo_Seller_IdPerson">
+            <End Role="Person" EntitySet="Person" />
+            <End Role="Seller" EntitySet="Seller" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dboServiceman_dbo_Serviceman_IdAspNetUser" Association="Self.FK_dboServiceman_dbo_Serviceman_IdAspNetUser">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Serviceman" EntitySet="Serviceman" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dboServiceman_dbo_Serviceman_IdDealershipSalon" Association="Self.FK_dboServiceman_dbo_Serviceman_IdDealershipSalon">
+            <End Role="DealershipSalon" EntitySet="DealershipSalon" />
+            <End Role="Serviceman" EntitySet="Serviceman" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dboServiceman_dbo_Serviceman_IdPerson" Association="Self.FK_dboServiceman_dbo_Serviceman_IdPerson">
+            <End Role="Person" EntitySet="Person" />
+            <End Role="Serviceman" EntitySet="Serviceman" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -116,17 +413,76 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
           </AssociationSet>
-          <EntitySet Name="Person" EntityType="Model.Person" />
-          <AssociationSet Name="FK_dbo_Person_dbo_Person_IdAspNetUsers" Association="Model.FK_dbo_Person_dbo_Person_IdAspNetUsers">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="Person" EntitySet="Person" />
-          </AssociationSet>
           <EntitySet Name="Manager" EntityType="Model.Manager" />
+          <EntitySet Name="Car" EntityType="Model.Car" />
+          <EntitySet Name="Customer" EntityType="Model.Customer" />
+          <EntitySet Name="DealershipSalon" EntityType="Model.DealershipSalon" />
+          <EntitySet Name="Issue" EntityType="Model.Issue" />
+          <EntitySet Name="Order" EntityType="Model.Order" />
+          <EntitySet Name="Seller" EntityType="Model.Seller" />
+          <EntitySet Name="Serviceman" EntityType="Model.Serviceman" />
+          <AssociationSet Name="FK_dboManager_dbo_Manager_IdAspNetUser" Association="Model.FK_dboManager_dbo_Manager_IdAspNetUser">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Manager" EntitySet="Manager" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dboSeller_dbo_Seller_IdAspNetUser" Association="Model.FK_dboSeller_dbo_Seller_IdAspNetUser">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Seller" EntitySet="Seller" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dboServiceman_dbo_Serviceman_IdAspNetUser" Association="Model.FK_dboServiceman_dbo_Serviceman_IdAspNetUser">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Serviceman" EntitySet="Serviceman" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dboCar_dbo_Car_IdDealershipSalon" Association="Model.FK_dboCar_dbo_Car_IdDealershipSalon">
+            <End Role="DealershipSalon" EntitySet="DealershipSalon" />
+            <End Role="Car" EntitySet="Car" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dboIssue_dbo_Issue_IdCar" Association="Model.FK_dboIssue_dbo_Issue_IdCar">
+            <End Role="Car" EntitySet="Car" />
+            <End Role="Issue" EntitySet="Issue" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dboOrder_dbo_Order_IdCar" Association="Model.FK_dboOrder_dbo_Order_IdCar">
+            <End Role="Car" EntitySet="Car" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dboCustomer_dbo_Customer_IdSeller" Association="Model.FK_dboCustomer_dbo_Customer_IdSeller">
+            <End Role="Seller" EntitySet="Seller" />
+            <End Role="Customer" EntitySet="Customer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dboOrder_dbo_Order_IdCustomer" Association="Model.FK_dboOrder_dbo_Order_IdCustomer">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dboManager_dbo_Manager_IdDealershipSalon" Association="Model.FK_dboManager_dbo_Manager_IdDealershipSalon">
+            <End Role="DealershipSalon" EntitySet="DealershipSalon" />
+            <End Role="Manager" EntitySet="Manager" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dboServiceman_dbo_Serviceman_IdDealershipSalon" Association="Model.FK_dboServiceman_dbo_Serviceman_IdDealershipSalon">
+            <End Role="DealershipSalon" EntitySet="DealershipSalon" />
+            <End Role="Serviceman" EntitySet="Serviceman" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dboIssue_dbo_Issue_IdServiceman" Association="Model.FK_dboIssue_dbo_Issue_IdServiceman">
+            <End Role="Serviceman" EntitySet="Serviceman" />
+            <End Role="Issue" EntitySet="Issue" />
+          </AssociationSet>
+          <EntitySet Name="Person" EntityType="Model.Person" />
+          <AssociationSet Name="FK_dboCustomer_dbo_Customer_IdPerson" Association="Model.FK_dboCustomer_dbo_Customer_IdPerson">
+            <End Role="Person" EntitySet="Person" />
+            <End Role="Customer" EntitySet="Customer" />
+          </AssociationSet>
           <AssociationSet Name="FK_dboManager_dbo_Manager_IdPerson" Association="Model.FK_dboManager_dbo_Manager_IdPerson">
             <End Role="Person" EntitySet="Person" />
             <End Role="Manager" EntitySet="Manager" />
           </AssociationSet>
-        </EntityContainer>
+          <AssociationSet Name="FK_dboSeller_dbo_Seller_IdPerson" Association="Model.FK_dboSeller_dbo_Seller_IdPerson">
+            <End Role="Person" EntitySet="Person" />
+            <End Role="Seller" EntitySet="Seller" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dboServiceman_dbo_Serviceman_IdPerson" Association="Model.FK_dboServiceman_dbo_Serviceman_IdPerson">
+            <End Role="Person" EntitySet="Person" />
+            <End Role="Serviceman" EntitySet="Serviceman" />
+          </AssociationSet>
+          </EntityContainer>
         <EntityType Name="AspNetUserRoles">
           <Key>
             <PropertyRef Name="UserId" />
@@ -153,7 +509,9 @@
           <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
           <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetUserRoles" Relationship="Model.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserRoles" />
-          <NavigationProperty Name="Person" Relationship="Model.FK_dbo_Person_dbo_Person_IdAspNetUsers" FromRole="AspNetUsers" ToRole="Person" />
+          <NavigationProperty Name="Manager" Relationship="Model.FK_dboManager_dbo_Manager_IdAspNetUser" FromRole="AspNetUsers" ToRole="Manager" />
+          <NavigationProperty Name="Seller" Relationship="Model.FK_dboSeller_dbo_Seller_IdAspNetUser" FromRole="AspNetUsers" ToRole="Seller" />
+          <NavigationProperty Name="Serviceman" Relationship="Model.FK_dboServiceman_dbo_Serviceman_IdAspNetUser" FromRole="AspNetUsers" ToRole="Serviceman" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
           <End Type="Model.AspNetUsers" Role="AspNetUsers" Multiplicity="1">
@@ -169,29 +527,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="Person">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Surname" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdAspNetUsers" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AspNetUsers" Relationship="Model.FK_dbo_Person_dbo_Person_IdAspNetUsers" FromRole="Person" ToRole="AspNetUsers" />
-          <NavigationProperty Name="Manager" Relationship="Model.FK_dboManager_dbo_Manager_IdPerson" FromRole="Person" ToRole="Manager" />
-        </EntityType>
-        <Association Name="FK_dbo_Person_dbo_Person_IdAspNetUsers">
-          <End Type="Model.AspNetUsers" Role="AspNetUsers" Multiplicity="0..1" />
-          <End Type="Model.Person" Role="Person" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Person">
-              <PropertyRef Name="IdAspNetUsers" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="Manager">
           <Key>
             <PropertyRef Name="Id" />
@@ -199,8 +534,265 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="IdPerson" Type="Int32" Nullable="false" />
           <Property Name="IdDealershipSalon" Type="Int32" Nullable="false" />
+          <Property Name="IdAspNetUser" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Model.FK_dboManager_dbo_Manager_IdAspNetUser" FromRole="Manager" ToRole="AspNetUsers" />
+          <NavigationProperty Name="DealershipSalon" Relationship="Model.FK_dboManager_dbo_Manager_IdDealershipSalon" FromRole="Manager" ToRole="DealershipSalon" />
           <NavigationProperty Name="Person" Relationship="Model.FK_dboManager_dbo_Manager_IdPerson" FromRole="Manager" ToRole="Person" />
         </EntityType>
+        <EntityType Name="Car">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Brand" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Model" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="VIN" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Color" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IdDealershipSalon" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="DealershipSalon" Relationship="Model.FK_dboCar_dbo_Car_IdDealershipSalon" FromRole="Car" ToRole="DealershipSalon" />
+          <NavigationProperty Name="Issue" Relationship="Model.FK_dboIssue_dbo_Issue_IdCar" FromRole="Car" ToRole="Issue" />
+          <NavigationProperty Name="Order" Relationship="Model.FK_dboOrder_dbo_Order_IdCar" FromRole="Car" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdPerson" Type="Int32" Nullable="false" />
+          <Property Name="IdSeller" Type="Int32" />
+          <NavigationProperty Name="Seller" Relationship="Model.FK_dboCustomer_dbo_Customer_IdSeller" FromRole="Customer" ToRole="Seller" />
+          <NavigationProperty Name="Order" Relationship="Model.FK_dboOrder_dbo_Order_IdCustomer" FromRole="Customer" ToRole="Order" />
+          <NavigationProperty Name="Person" Relationship="Model.FK_dboCustomer_dbo_Customer_IdPerson" FromRole="Customer" ToRole="Person" />
+        </EntityType>
+        <EntityType Name="DealershipSalon">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PhoneNumber" Type="String" Nullable="false" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Car" Relationship="Model.FK_dboCar_dbo_Car_IdDealershipSalon" FromRole="DealershipSalon" ToRole="Car" />
+          <NavigationProperty Name="Manager" Relationship="Model.FK_dboManager_dbo_Manager_IdDealershipSalon" FromRole="DealershipSalon" ToRole="Manager" />
+          <NavigationProperty Name="Serviceman" Relationship="Model.FK_dboServiceman_dbo_Serviceman_IdDealershipSalon" FromRole="DealershipSalon" ToRole="Serviceman" />
+        </EntityType>
+        <EntityType Name="Issue">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdCar" Type="Int32" Nullable="false" />
+          <Property Name="IdServiceman" Type="Int32" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Car" Relationship="Model.FK_dboIssue_dbo_Issue_IdCar" FromRole="Issue" ToRole="Car" />
+          <NavigationProperty Name="Serviceman" Relationship="Model.FK_dboIssue_dbo_Issue_IdServiceman" FromRole="Issue" ToRole="Serviceman" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdCar" Type="Int32" Nullable="false" />
+          <Property Name="IdCustomer" Type="Int32" Nullable="false" />
+          <Property Name="Status" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Car" Relationship="Model.FK_dboOrder_dbo_Order_IdCar" FromRole="Order" ToRole="Car" />
+          <NavigationProperty Name="Customer" Relationship="Model.FK_dboOrder_dbo_Order_IdCustomer" FromRole="Order" ToRole="Customer" />
+        </EntityType>
+        <EntityType Name="Seller">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdDealershipSalon" Type="Int32" Nullable="false" />
+          <Property Name="IdPerson" Type="Int32" Nullable="false" />
+          <Property Name="IdAspNetUser" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Model.FK_dboSeller_dbo_Seller_IdAspNetUser" FromRole="Seller" ToRole="AspNetUsers" />
+          <NavigationProperty Name="Customer" Relationship="Model.FK_dboCustomer_dbo_Customer_IdSeller" FromRole="Seller" ToRole="Customer" />
+          <NavigationProperty Name="Person" Relationship="Model.FK_dboSeller_dbo_Seller_IdPerson" FromRole="Seller" ToRole="Person" />
+        </EntityType>
+        <EntityType Name="Serviceman">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdDealershipSalon" Type="Int32" Nullable="false" />
+          <Property Name="IdPerson" Type="Int32" Nullable="false" />
+          <Property Name="IdAspNetUser" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Model.FK_dboServiceman_dbo_Serviceman_IdAspNetUser" FromRole="Serviceman" ToRole="AspNetUsers" />
+          <NavigationProperty Name="DealershipSalon" Relationship="Model.FK_dboServiceman_dbo_Serviceman_IdDealershipSalon" FromRole="Serviceman" ToRole="DealershipSalon" />
+          <NavigationProperty Name="Issue" Relationship="Model.FK_dboIssue_dbo_Issue_IdServiceman" FromRole="Serviceman" ToRole="Issue" />
+          <NavigationProperty Name="Person" Relationship="Model.FK_dboServiceman_dbo_Serviceman_IdPerson" FromRole="Serviceman" ToRole="Person" />
+        </EntityType>
+        <Association Name="FK_dboManager_dbo_Manager_IdAspNetUser">
+          <End Type="Model.AspNetUsers" Role="AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model.Manager" Role="Manager" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Manager">
+              <PropertyRef Name="IdAspNetUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dboSeller_dbo_Seller_IdAspNetUser">
+          <End Type="Model.AspNetUsers" Role="AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model.Seller" Role="Seller" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Seller">
+              <PropertyRef Name="IdAspNetUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dboServiceman_dbo_Serviceman_IdAspNetUser">
+          <End Type="Model.AspNetUsers" Role="AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model.Serviceman" Role="Serviceman" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Serviceman">
+              <PropertyRef Name="IdAspNetUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dboCar_dbo_Car_IdDealershipSalon">
+          <End Type="Model.DealershipSalon" Role="DealershipSalon" Multiplicity="1" />
+          <End Type="Model.Car" Role="Car" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DealershipSalon">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Car">
+              <PropertyRef Name="IdDealershipSalon" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dboIssue_dbo_Issue_IdCar">
+          <End Type="Model.Car" Role="Car" Multiplicity="1" />
+          <End Type="Model.Issue" Role="Issue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Car">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Issue">
+              <PropertyRef Name="IdCar" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dboOrder_dbo_Order_IdCar">
+          <End Type="Model.Car" Role="Car" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Car">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="IdCar" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dboCustomer_dbo_Customer_IdSeller">
+          <End Type="Model.Seller" Role="Seller" Multiplicity="0..1" />
+          <End Type="Model.Customer" Role="Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seller">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="IdSeller" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dboOrder_dbo_Order_IdCustomer">
+          <End Type="Model.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="Model.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="IdCustomer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dboManager_dbo_Manager_IdDealershipSalon">
+          <End Type="Model.DealershipSalon" Role="DealershipSalon" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model.Manager" Role="Manager" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DealershipSalon">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Manager">
+              <PropertyRef Name="IdDealershipSalon" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dboServiceman_dbo_Serviceman_IdDealershipSalon">
+          <End Type="Model.DealershipSalon" Role="DealershipSalon" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model.Serviceman" Role="Serviceman" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DealershipSalon">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Serviceman">
+              <PropertyRef Name="IdDealershipSalon" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dboIssue_dbo_Issue_IdServiceman">
+          <End Type="Model.Serviceman" Role="Serviceman" Multiplicity="0..1" />
+          <End Type="Model.Issue" Role="Issue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Serviceman">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Issue">
+              <PropertyRef Name="IdServiceman" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Person">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Surname" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Customer" Relationship="Model.FK_dboCustomer_dbo_Customer_IdPerson" FromRole="Person" ToRole="Customer" />
+          <NavigationProperty Name="Manager" Relationship="Model.FK_dboManager_dbo_Manager_IdPerson" FromRole="Person" ToRole="Manager" />
+          <NavigationProperty Name="Seller" Relationship="Model.FK_dboSeller_dbo_Seller_IdPerson" FromRole="Person" ToRole="Seller" />
+          <NavigationProperty Name="Serviceman" Relationship="Model.FK_dboServiceman_dbo_Serviceman_IdPerson" FromRole="Person" ToRole="Serviceman" />
+        </EntityType>
+        <Association Name="FK_dboCustomer_dbo_Customer_IdPerson">
+          <End Type="Model.Person" Role="Person" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model.Customer" Role="Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="IdPerson" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_dboManager_dbo_Manager_IdPerson">
           <End Type="Model.Person" Role="Person" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -215,7 +807,35 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        <Association Name="FK_dboSeller_dbo_Seller_IdPerson">
+          <End Type="Model.Person" Role="Person" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model.Seller" Role="Seller" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Seller">
+              <PropertyRef Name="IdPerson" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dboServiceman_dbo_Serviceman_IdPerson">
+          <End Type="Model.Person" Role="Person" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model.Serviceman" Role="Serviceman" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Serviceman">
+              <PropertyRef Name="IdPerson" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -247,21 +867,92 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Person">
-            <EntityTypeMapping TypeName="Model.Person">
-              <MappingFragment StoreEntitySet="Person">
-                <ScalarProperty Name="IdAspNetUsers" ColumnName="IdAspNetUsers" />
-                <ScalarProperty Name="Surname" ColumnName="Surname" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
+          <EntitySetMapping Name="Manager">
+            <EntityTypeMapping TypeName="Model.Manager">
+              <MappingFragment StoreEntitySet="Manager">
+                <ScalarProperty Name="IdAspNetUser" ColumnName="IdAspNetUser" />
+                <ScalarProperty Name="IdDealershipSalon" ColumnName="IdDealershipSalon" />
+                <ScalarProperty Name="IdPerson" ColumnName="IdPerson" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Manager">
-            <EntityTypeMapping TypeName="Model.Manager">
-              <MappingFragment StoreEntitySet="Manager">
+          <EntitySetMapping Name="Car">
+            <EntityTypeMapping TypeName="Model.Car">
+              <MappingFragment StoreEntitySet="Car">
                 <ScalarProperty Name="IdDealershipSalon" ColumnName="IdDealershipSalon" />
+                <ScalarProperty Name="Color" ColumnName="Color" />
+                <ScalarProperty Name="VIN" ColumnName="VIN" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="Brand" ColumnName="Brand" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customer">
+            <EntityTypeMapping TypeName="Model.Customer">
+              <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="IdSeller" ColumnName="IdSeller" />
                 <ScalarProperty Name="IdPerson" ColumnName="IdPerson" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DealershipSalon">
+            <EntityTypeMapping TypeName="Model.DealershipSalon">
+              <MappingFragment StoreEntitySet="DealershipSalon">
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Issue">
+            <EntityTypeMapping TypeName="Model.Issue">
+              <MappingFragment StoreEntitySet="Issue">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="IdServiceman" ColumnName="IdServiceman" />
+                <ScalarProperty Name="IdCar" ColumnName="IdCar" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Order">
+            <EntityTypeMapping TypeName="Model.Order">
+              <MappingFragment StoreEntitySet="Order">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="IdCustomer" ColumnName="IdCustomer" />
+                <ScalarProperty Name="IdCar" ColumnName="IdCar" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Seller">
+            <EntityTypeMapping TypeName="Model.Seller">
+              <MappingFragment StoreEntitySet="Seller">
+                <ScalarProperty Name="IdAspNetUser" ColumnName="IdAspNetUser" />
+                <ScalarProperty Name="IdPerson" ColumnName="IdPerson" />
+                <ScalarProperty Name="IdDealershipSalon" ColumnName="IdDealershipSalon" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Serviceman">
+            <EntityTypeMapping TypeName="Model.Serviceman">
+              <MappingFragment StoreEntitySet="Serviceman">
+                <ScalarProperty Name="IdAspNetUser" ColumnName="IdAspNetUser" />
+                <ScalarProperty Name="IdPerson" ColumnName="IdPerson" />
+                <ScalarProperty Name="IdDealershipSalon" ColumnName="IdDealershipSalon" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Person">
+            <EntityTypeMapping TypeName="Model.Person">
+              <MappingFragment StoreEntitySet="Person">
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

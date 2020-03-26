@@ -4,14 +4,34 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="be0e490d7a9848389682bdef960b10aa" Name="Diagram1">
-        <EntityTypeShape EntityType="Model.AspNetUserRoles" Width="1.5" PointX="3" PointY="2" />
-        <EntityTypeShape EntityType="Model.AspNetUsers" Width="1.5" PointX="0.75" PointY="1" />
+      <Diagram DiagramId="be0e490d7a9848389682bdef960b10aa" Name="Diagram1" ZoomLevel="65">
+        <EntityTypeShape EntityType="Model.AspNetUserRoles" Width="1.5" PointX="0.5" PointY="0.875" />
+        <EntityTypeShape EntityType="Model.AspNetUsers" Width="1.5" PointX="0.5" PointY="2.75" />
         <AssociationConnector Association="Model.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" />
-        <EntityTypeShape EntityType="Model.Person" Width="1.5" PointX="3" PointY="4.875" />
-        <AssociationConnector Association="Model.FK_dbo_Person_dbo_Person_IdAspNetUsers" />
-        <EntityTypeShape EntityType="Model.Manager" Width="1.5" PointX="5.25" PointY="5.125" />
+        <EntityTypeShape EntityType="Model.Manager" Width="1.5" PointX="2.5" PointY="4.25" />
+        <EntityTypeShape EntityType="Model.Car" Width="1.5" PointX="7.625" PointY="6.625" />
+        <EntityTypeShape EntityType="Model.Customer" Width="1.5" PointX="7.125" PointY="2.25" />
+        <EntityTypeShape EntityType="Model.DealershipSalon" Width="1.5" PointX="2.625" PointY="8.75" />
+        <EntityTypeShape EntityType="Model.Issue" Width="1.5" PointX="10.875" PointY="4.25" />
+        <EntityTypeShape EntityType="Model.Order" Width="1.5" PointX="5.375" PointY="5.5" />
+        <EntityTypeShape EntityType="Model.Seller" Width="1.5" PointX="3" PointY="1" />
+        <EntityTypeShape EntityType="Model.Serviceman" Width="1.5" PointX="12" PointY="9" />
+        <AssociationConnector Association="Model.FK_dboManager_dbo_Manager_IdAspNetUser" />
+        <AssociationConnector Association="Model.FK_dboSeller_dbo_Seller_IdAspNetUser" />
+        <AssociationConnector Association="Model.FK_dboServiceman_dbo_Serviceman_IdAspNetUser" />
+        <AssociationConnector Association="Model.FK_dboCar_dbo_Car_IdDealershipSalon" />
+        <AssociationConnector Association="Model.FK_dboIssue_dbo_Issue_IdCar" />
+        <AssociationConnector Association="Model.FK_dboOrder_dbo_Order_IdCar" />
+        <AssociationConnector Association="Model.FK_dboCustomer_dbo_Customer_IdSeller" />
+        <AssociationConnector Association="Model.FK_dboOrder_dbo_Order_IdCustomer" />
+        <AssociationConnector Association="Model.FK_dboManager_dbo_Manager_IdDealershipSalon" />
+        <AssociationConnector Association="Model.FK_dboServiceman_dbo_Serviceman_IdDealershipSalon" />
+        <AssociationConnector Association="Model.FK_dboIssue_dbo_Issue_IdServiceman" />
+        <EntityTypeShape EntityType="Model.Person" Width="1.5" PointX="13.125" PointY="0.5" />
+        <AssociationConnector Association="Model.FK_dboCustomer_dbo_Customer_IdPerson" />
         <AssociationConnector Association="Model.FK_dboManager_dbo_Manager_IdPerson" />
+        <AssociationConnector Association="Model.FK_dboSeller_dbo_Seller_IdPerson" />
+        <AssociationConnector Association="Model.FK_dboServiceman_dbo_Serviceman_IdPerson" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

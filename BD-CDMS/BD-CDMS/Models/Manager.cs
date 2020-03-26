@@ -17,7 +17,10 @@ namespace BD_CDMS.Models
         public int Id { get; set; }
         public int IdPerson { get; set; }
         public int IdDealershipSalon { get; set; }
+        public string IdAspNetUser { get; set; }
     
+        public virtual AspNetUsers AspNetUsers { get; set; }
+        public virtual DealershipSalon DealershipSalon { get; set; }
         public virtual Person Person { get; set; }
     }
 }

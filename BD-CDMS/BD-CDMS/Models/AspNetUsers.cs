@@ -18,7 +18,9 @@ namespace BD_CDMS.Models
         public AspNetUsers()
         {
             this.AspNetUserRoles = new HashSet<AspNetUserRoles>();
-            this.Person = new HashSet<Person>();
+            this.Manager = new HashSet<Manager>();
+            this.Seller = new HashSet<Seller>();
+            this.Serviceman = new HashSet<Serviceman>();
         }
     
         public string Id { get; set; }
@@ -37,6 +39,10 @@ namespace BD_CDMS.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetUserRoles> AspNetUserRoles { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Person> Person { get; set; }
+        public virtual ICollection<Manager> Manager { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Seller> Seller { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Serviceman> Serviceman { get; set; }
     }
 }
