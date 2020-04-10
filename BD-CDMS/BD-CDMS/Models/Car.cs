@@ -17,6 +17,7 @@ namespace BD_CDMS.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Car()
         {
+            this.Attribute = new HashSet<Attribute>();
             this.Issue = new HashSet<Issue>();
             this.Order = new HashSet<Order>();
         }
@@ -27,7 +28,11 @@ namespace BD_CDMS.Models
         public string VIN { get; set; }
         public string Color { get; set; }
         public int IdDealershipSalon { get; set; }
+        public string ImagePath { get; set; }
+        public bool IdSold { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Attribute> Attribute { get; set; }
         public virtual DealershipSalon DealershipSalon { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Issue> Issue { get; set; }

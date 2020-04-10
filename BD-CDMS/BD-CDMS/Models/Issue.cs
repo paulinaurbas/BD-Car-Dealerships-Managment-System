@@ -16,10 +16,10 @@ namespace BD_CDMS.Models
     {
         public int Id { get; set; }
         public int IdCar { get; set; }
-        public Nullable<int> IdServiceman { get; set; }
+        public string IdServiceman { get; set; }
         public string Description { get; set; }
     
+        public virtual AspNetUsers AspNetUsers { get; set; }
         public virtual Car Car { get; set; }
-        public virtual Serviceman Serviceman { get; set; }
     }
 }

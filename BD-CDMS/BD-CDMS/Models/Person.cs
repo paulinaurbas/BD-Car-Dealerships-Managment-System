@@ -17,10 +17,7 @@ namespace BD_CDMS.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Person()
         {
-            this.Customer = new HashSet<Customer>();
-            this.Manager = new HashSet<Manager>();
-            this.Seller = new HashSet<Seller>();
-            this.Serviceman = new HashSet<Serviceman>();
+            this.Order = new HashSet<Order>();
         }
     
         public int Id { get; set; }
@@ -28,12 +25,6 @@ namespace BD_CDMS.Models
         public string Surname { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Customer> Customer { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Manager> Manager { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Seller> Seller { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Serviceman> Serviceman { get; set; }
+        public virtual ICollection<Order> Order { get; set; }
     }
 }

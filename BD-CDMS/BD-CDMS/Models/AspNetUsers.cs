@@ -18,9 +18,9 @@ namespace BD_CDMS.Models
         public AspNetUsers()
         {
             this.AspNetUserRoles = new HashSet<AspNetUserRoles>();
-            this.Manager = new HashSet<Manager>();
+            this.Issue = new HashSet<Issue>();
             this.Seller = new HashSet<Seller>();
-            this.Serviceman = new HashSet<Serviceman>();
+            this.Order = new HashSet<Order>();
         }
     
         public string Id { get; set; }
@@ -35,14 +35,16 @@ namespace BD_CDMS.Models
         public bool LockoutEnabled { get; set; }
         public int AccessFailedCount { get; set; }
         public string UserName { get; set; }
+        public Nullable<int> IdDealershipSalon { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetUserRoles> AspNetUserRoles { get; set; }
+        public virtual DealershipSalon DealershipSalon { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Manager> Manager { get; set; }
+        public virtual ICollection<Issue> Issue { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Seller> Seller { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Serviceman> Serviceman { get; set; }
+        public virtual ICollection<Order> Order { get; set; }
     }
 }

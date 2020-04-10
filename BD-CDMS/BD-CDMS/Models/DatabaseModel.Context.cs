@@ -27,14 +27,12 @@ namespace BD_CDMS.Models
     
         public virtual DbSet<AspNetUserRoles> AspNetUserRoles { get; set; }
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
-        public virtual DbSet<Manager> Manager { get; set; }
-        public virtual DbSet<Car> Car { get; set; }
-        public virtual DbSet<Customer> Customer { get; set; }
         public virtual DbSet<DealershipSalon> DealershipSalon { get; set; }
         public virtual DbSet<Issue> Issue { get; set; }
-        public virtual DbSet<Order> Order { get; set; }
-        public virtual DbSet<Seller> Seller { get; set; }
-        public virtual DbSet<Serviceman> Serviceman { get; set; }
         public virtual DbSet<Person> Person { get; set; }
+        public virtual DbSet<Seller> Seller { get; set; }
+        public virtual DbSet<Attribute> Attribute { get; set; }
+        public virtual DbSet<Car> Car { get; set; }
+        public virtual DbSet<Order> Order { get; set; }
     }
 }

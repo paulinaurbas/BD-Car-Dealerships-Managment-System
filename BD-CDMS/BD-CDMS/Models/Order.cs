@@ -17,9 +17,12 @@ namespace BD_CDMS.Models
         public int Id { get; set; }
         public int IdCar { get; set; }
         public int IdCustomer { get; set; }
+        public string IdSeller { get; set; }
         public string Status { get; set; }
+        public System.DateTime Date { get; set; }
     
+        public virtual AspNetUsers AspNetUsers { get; set; }
         public virtual Car Car { get; set; }
-        public virtual Customer Customer { get; set; }
+        public virtual Person Person { get; set; }
     }
 }

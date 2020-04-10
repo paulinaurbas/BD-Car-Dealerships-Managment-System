@@ -14,20 +14,11 @@ namespace BD_CDMS.Models
     
     public partial class Seller
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Seller()
-        {
-            this.Customer = new HashSet<Customer>();
-        }
-    
         public int Id { get; set; }
         public int IdDealershipSalon { get; set; }
-        public int IdPerson { get; set; }
         public string IdAspNetUser { get; set; }
     
         public virtual AspNetUsers AspNetUsers { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Customer> Customer { get; set; }
-        public virtual Person Person { get; set; }
+        public virtual DealershipSalon DealershipSalon { get; set; }
     }
 }
