@@ -13,12 +13,12 @@ namespace BD_CDMS.Controllers
     [Authorize]
     public class PeopleController : Controller
     {
-        private Entities db = new Entities();
+        private Entities _db = new Entities();
 
         // GET: People
         public ActionResult Index()
         {
-            return View(db.Person.ToList());
+            return View(_db.Person.ToList());
         }
 
         // GET: People/Details/5
@@ -28,11 +28,14 @@ namespace BD_CDMS.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Person person = db.Person.Find(id);
+
+            Person person = _db.Person.Find(id);
+
             if (person == null)
             {
                 return HttpNotFound();
             }
+
             return View(person);
         }
 
@@ -51,8 +54,8 @@ namespace BD_CDMS.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Person.Add(person);
-                db.SaveChanges();
+                _db.Person.Add(person);
+                _db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -66,11 +69,14 @@ namespace BD_CDMS.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Person person = db.Person.Find(id);
+
+            Person person = _db.Person.Find(id);
+
             if (person == null)
             {
                 return HttpNotFound();
             }
+
             return View(person);
         }
 
@@ -83,10 +89,12 @@ namespace BD_CDMS.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(person).State = EntityState.Modified;
-                db.SaveChanges();
+                _db.Entry(person).State = EntityState.Modified;
+                _db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
+
             return View(person);
         }
 
@@ -97,11 +105,14 @@ namespace BD_CDMS.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Person person = db.Person.Find(id);
+
+            Person person = _db.Person.Find(id);
+
             if (person == null)
             {
                 return HttpNotFound();
             }
+
             return View(person);
         }
 
@@ -110,9 +121,11 @@ namespace BD_CDMS.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Person person = db.Person.Find(id);
-            db.Person.Remove(person);
-            db.SaveChanges();
+            Person person = _db.Person.Find(id);
+
+            _db.Person.Remove(person);
+            _db.SaveChanges();
+
             return RedirectToAction("Index");
         }
 
@@ -120,8 +133,9 @@ namespace BD_CDMS.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _db.Dispose();
             }
+
             base.Dispose(disposing);
         }
 
@@ -142,8 +156,8 @@ namespace BD_CDMS.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Person.Add(person);
-                db.SaveChanges();
+                _db.Person.Add(person);
+                _db.SaveChanges();
                 return RedirectToAction("Create", "Orders");
             }
 

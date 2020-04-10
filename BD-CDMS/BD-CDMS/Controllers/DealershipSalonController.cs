@@ -13,12 +13,12 @@ namespace BD_CDMS.Controllers
     [Authorize]
     public class DealershipSalonController : Controller
     {
-        private Entities db = new Entities();
+        private Entities _db = new Entities();
 
         // GET: DealershipSalon
         public ActionResult Index()
         {
-            var car = db.Car.Select(n => n).Where(c => c.IdSold == false);
+            var car = _db.Car.Select(n => n).Where(c => c.IdSold == false);
 
             return View(car.ToList());
         }
@@ -27,21 +27,21 @@ namespace BD_CDMS.Controllers
         public ActionResult Details(int? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Car car = db.Car.Find(id);
+
+            Car car = _db.Car.Find(id);
+
             if (car == null)
-            {
                 return HttpNotFound();
-            }
+
             return View(car);
         }
 
         // GET: DealershipSalon/Create
         public ActionResult Create()
         {
-            ViewBag.IdDealershipSalon = new SelectList(db.DealershipSalon, "Id", "PhoneNumber");
+            ViewBag.IdDealershipSalon = new SelectList(_db.DealershipSalon, "Id", "PhoneNumber");
+
             return View();
         }
 
@@ -54,12 +54,14 @@ namespace BD_CDMS.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Car.Add(car);
-                db.SaveChanges();
+                _db.Car.Add(car);
+                _db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
 
-            ViewBag.IdDealershipSalon = new SelectList(db.DealershipSalon, "Id", "PhoneNumber", car.IdDealershipSalon);
+            ViewBag.IdDealershipSalon = new SelectList(_db.DealershipSalon, "Id", "PhoneNumber", car.IdDealershipSalon);
+
             return View(car);
         }
 
@@ -67,15 +69,15 @@ namespace BD_CDMS.Controllers
         public ActionResult Edit(int? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Car car = db.Car.Find(id);
+
+            Car car = _db.Car.Find(id);
+
             if (car == null)
-            {
                 return HttpNotFound();
-            }
-            ViewBag.IdDealershipSalon = new SelectList(db.DealershipSalon, "Id", "PhoneNumber", car.IdDealershipSalon);
+
+            ViewBag.IdDealershipSalon = new SelectList(_db.DealershipSalon, "Id", "PhoneNumber", car.IdDealershipSalon);
+
             return View(car);
         }
 
@@ -88,11 +90,13 @@ namespace BD_CDMS.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(car).State = EntityState.Modified;
-                db.SaveChanges();
+                _db.Entry(car).State = EntityState.Modified;
+                _db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
-            ViewBag.IdDealershipSalon = new SelectList(db.DealershipSalon, "Id", "PhoneNumber", car.IdDealershipSalon);
+            ViewBag.IdDealershipSalon = new SelectList(_db.DealershipSalon, "Id", "PhoneNumber", car.IdDealershipSalon);
+
             return View(car);
         }
 
@@ -100,14 +104,13 @@ namespace BD_CDMS.Controllers
         public ActionResult Delete(int? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Car car = db.Car.Find(id);
+
+            Car car = _db.Car.Find(id);
+
             if (car == null)
-            {
                 return HttpNotFound();
-            }
+
             return View(car);
         }
 
@@ -116,18 +119,19 @@ namespace BD_CDMS.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Car car = db.Car.Find(id);
-            db.Car.Remove(car);
-            db.SaveChanges();
+            Car car = _db.Car.Find(id);
+
+            _db.Car.Remove(car);
+            _db.SaveChanges();
+
             return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-            {
-                db.Dispose();
-            }
+                _db.Dispose();
+
             base.Dispose(disposing);
         }
 

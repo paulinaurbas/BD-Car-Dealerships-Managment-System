@@ -70,7 +70,7 @@
                     if (System.Web.HttpContext.Current.User.IsInRole("Seller"))
                     {
                         <li>@Html.ActionLink("Create Order", "Create", "Orders") |</li>
-                        <li>@Html.ActionLink("Create Order/Person", "CreateOrder", "People")</li>
+                        <li>@Html.ActionLink("Create Person", "CreateOrder", "People")</li>
                     }
                 }
             </td>

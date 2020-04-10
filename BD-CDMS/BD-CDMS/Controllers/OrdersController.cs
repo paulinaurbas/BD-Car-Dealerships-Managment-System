@@ -14,12 +14,13 @@ namespace BD_CDMS.Controllers
     [Authorize]
     public class OrdersController : Controller
     {
-        private Entities db = new Entities();
+        private Entities _db = new Entities();
 
         // GET: Orders
         public ActionResult Index()
         {
-            var order = db.Order.Include(o => o.AspNetUsers).Include(o => o.Car).Include(o => o.Person);
+            var order = _db.Order.Include(o => o.AspNetUsers).Include(o => o.Car).Include(o => o.Person);
+
             return View(order.ToList());
         }
 
@@ -30,11 +31,14 @@ namespace BD_CDMS.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Order order = db.Order.Find(id);
+
+            Order order = _db.Order.Find(id);
+
             if (order == null)
             {
                 return HttpNotFound();
             }
+
             return View(order);
         }
 
@@ -42,9 +46,10 @@ namespace BD_CDMS.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
-            ViewBag.IdSeller = new SelectList(db.AspNetUsers, "Id", "Email");
-            ViewBag.IdCar = new SelectList(db.Car, "Id", "Brand");
-            ViewBag.IdCustomer = new SelectList(db.Person, "Id", "Name");
+            ViewBag.IdSeller = new SelectList(_db.AspNetUsers, "Id", "Email");
+            ViewBag.IdCar = new SelectList(_db.Car, "Id", "Brand");
+            ViewBag.IdCustomer = new SelectList(_db.Person, "Id", "Name");
+
             return View();
         }
 
@@ -60,23 +65,24 @@ namespace BD_CDMS.Controllers
 
             if (ModelState.IsValid)
             {
-                db.Order.Add(order);
-                db.SaveChanges();
+                _db.Order.Add(order);
+                _db.SaveChanges();
 
 
-                Car car = db.Car.Find(order.IdCar);
+                Car car = _db.Car.Find(order.IdCar);
                 car.IdSold = true;
 
-                db.Entry(car).State = EntityState.Modified;
-                db.SaveChanges();
+                _db.Entry(car).State = EntityState.Modified;
+                _db.SaveChanges();
 
 
                 return RedirectToAction("Index");
             }
 
-            ViewBag.IdSeller = new SelectList(db.AspNetUsers, "Id", "Email", order.IdSeller);
-            ViewBag.IdCar = new SelectList(db.Car, "Id", "Brand", order.IdCar);
-            ViewBag.IdCustomer = new SelectList(db.Person, "Id", "Name", order.IdCustomer);
+            ViewBag.IdSeller = new SelectList(_db.AspNetUsers, "Id", "Email", order.IdSeller);
+            ViewBag.IdCar = new SelectList(_db.Car, "Id", "Brand", order.IdCar);
+            ViewBag.IdCustomer = new SelectList(_db.Person, "Id", "Name", order.IdCustomer);
+
             return View(order);
         }
 
@@ -88,14 +94,16 @@ namespace BD_CDMS.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Order order = db.Order.Find(id);
+
+            Order order = _db.Order.Find(id);
+
             if (order == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.IdSeller = new SelectList(db.AspNetUsers, "Id", "Email", order.IdSeller);
-            ViewBag.IdCar = new SelectList(db.Car, "Id", "Brand", order.IdCar);
-            ViewBag.IdCustomer = new SelectList(db.Person, "Id", "Name", order.IdCustomer);
+            ViewBag.IdSeller = new SelectList(_db.AspNetUsers, "Id", "Email", order.IdSeller);
+            ViewBag.IdCar = new SelectList(_db.Car, "Id", "Brand", order.IdCar);
+            ViewBag.IdCustomer = new SelectList(_db.Person, "Id", "Name", order.IdCustomer);
             return View(order);
         }
 
@@ -109,13 +117,15 @@ namespace BD_CDMS.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(order).State = EntityState.Modified;
-                db.SaveChanges();
+                _db.Entry(order).State = EntityState.Modified;
+                _db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.IdSeller = new SelectList(db.AspNetUsers, "Id", "Email", order.IdSeller);
-            ViewBag.IdCar = new SelectList(db.Car, "Id", "Brand", order.IdCar);
-            ViewBag.IdCustomer = new SelectList(db.Person, "Id", "Name", order.IdCustomer);
+
+            ViewBag.IdSeller = new SelectList(_db.AspNetUsers, "Id", "Email", order.IdSeller);
+            ViewBag.IdCar = new SelectList(_db.Car, "Id", "Brand", order.IdCar);
+            ViewBag.IdCustomer = new SelectList(_db.Person, "Id", "Name", order.IdCustomer);
+
             return View(order);
         }
 
@@ -127,7 +137,9 @@ namespace BD_CDMS.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Order order = db.Order.Find(id);
+
+            Order order = _db.Order.Find(id);
+
             if (order == null)
             {
                 return HttpNotFound();
@@ -141,9 +153,11 @@ namespace BD_CDMS.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Order order = db.Order.Find(id);
-            db.Order.Remove(order);
-            db.SaveChanges();
+            Order order = _db.Order.Find(id);
+
+            _db.Order.Remove(order);
+            _db.SaveChanges();
+
             return RedirectToAction("Index");
         }
 
@@ -151,8 +165,9 @@ namespace BD_CDMS.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _db.Dispose();
             }
+
             base.Dispose(disposing);
         }
     }
