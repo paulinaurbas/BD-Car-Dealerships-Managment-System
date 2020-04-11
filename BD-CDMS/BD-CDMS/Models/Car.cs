@@ -11,7 +11,8 @@ namespace BD_CDMS.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Car
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,15 +22,15 @@ namespace BD_CDMS.Models
             this.Issue = new HashSet<Issue>();
             this.Order = new HashSet<Order>();
         }
-    
+
         public int Id { get; set; }
-        public string Brand { get; set; }
-        public string Model { get; set; }
-        public string VIN { get; set; }
-        public string Color { get; set; }
+        [Required, StringLength(50)] public string Brand { get; set; }
+        [Required, StringLength(50)] public string Model { get; set; }
+        [Required, StringLength(30)] public string VIN { get; set; }
+        [Required, StringLength(50)] public string Color { get; set; }
         public int IdDealershipSalon { get; set; }
-        public string ImagePath { get; set; }
-        public bool IdSold { get; set; }
+        [StringLength(100)] public string ImagePath { get; set; }
+        [Required] public bool IdSold { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Attribute> Attribute { get; set; }

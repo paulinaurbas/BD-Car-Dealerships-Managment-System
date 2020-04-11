@@ -11,7 +11,7 @@ using Microsoft.AspNet.Identity;
 
 namespace BD_CDMS.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin,Seller")]
     public class OrdersController : Controller
     {
         private Entities _db = new Entities();
@@ -43,11 +43,10 @@ namespace BD_CDMS.Controllers
         }
 
         // GET: Orders/Create
-        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             ViewBag.IdSeller = new SelectList(_db.AspNetUsers, "Id", "Email");
-            ViewBag.IdCar = new SelectList(_db.Car, "Id", "Brand");
+            ViewBag.IdCar = new SelectList(_db.Car.Select(n => n).Where(c => c.IdSold == false), "Id", "Brand");
             ViewBag.IdCustomer = new SelectList(_db.Person, "Id", "Name");
 
             return View();
@@ -87,7 +86,6 @@ namespace BD_CDMS.Controllers
         }
 
         // GET: Orders/Edit/5
-        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -112,7 +110,6 @@ namespace BD_CDMS.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
         public ActionResult Edit([Bind(Include = "Id,IdCar,IdCustomer,IdSeller,Status,Date")] Order order)
         {
             if (ModelState.IsValid)
@@ -130,7 +127,6 @@ namespace BD_CDMS.Controllers
         }
 
         // GET: Orders/Delete/5
-        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -148,7 +144,6 @@ namespace BD_CDMS.Controllers
         }
 
         // POST: Orders/Delete/5
-        [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

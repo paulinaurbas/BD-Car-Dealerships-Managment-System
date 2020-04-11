@@ -10,7 +10,7 @@ using BD_CDMS.Models;
 
 namespace BD_CDMS.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin,Seller")]
     public class PeopleController : Controller
     {
         private Entities _db = new Entities();

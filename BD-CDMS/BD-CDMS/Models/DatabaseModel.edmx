@@ -51,7 +51,7 @@
           <Property Name="VIN" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="Color" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="IdDealershipSalon" Type="int" Nullable="false" />
-          <Property Name="ImagePath" Type="nchar" MaxLength="50" />
+          <Property Name="ImagePath" Type="nchar" MaxLength="100" />
           <Property Name="IdSold" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="DealershipSalon">
@@ -59,6 +59,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="50" Nullable="false" />
           <Property Name="PhoneNumber" Type="nchar" MaxLength="15" Nullable="false" />
           <Property Name="Address" Type="nchar" MaxLength="50" Nullable="false" />
           <Property Name="Email" Type="nchar" MaxLength="50" Nullable="false" />
@@ -402,6 +403,7 @@
           <NavigationProperty Name="AspNetUsers" Relationship="Model.FK_dboAspNetUsers_dbo_AspNetUsers_IdDealershipSalon" FromRole="DealershipSalon" ToRole="AspNetUsers" />
           <NavigationProperty Name="Seller" Relationship="Model.FK_dboSeller_dbo_Seller_IdDealershipSalon" FromRole="DealershipSalon" ToRole="Seller" />
           <NavigationProperty Name="Car" Relationship="Model.FK_dboCar_dbo_Car_IdDealershipSalon" FromRole="DealershipSalon" ToRole="Car" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
         </EntityType>
         <EntityType Name="Issue">
           <Key>
@@ -520,7 +522,7 @@
           <Property Name="VIN" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
           <Property Name="Color" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="IdDealershipSalon" Type="Int32" Nullable="false" />
-          <Property Name="ImagePath" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="ImagePath" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
           <Property Name="IdSold" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Attribute" Relationship="Model.FK_dboAttribute_dbo_Attribute_IdCar" FromRole="Car" ToRole="Attribute" />
           <NavigationProperty Name="DealershipSalon" Relationship="Model.FK_dboCar_dbo_Car_IdDealershipSalon" FromRole="Car" ToRole="DealershipSalon" />
@@ -657,6 +659,7 @@
           <EntitySetMapping Name="DealershipSalon">
             <EntityTypeMapping TypeName="Model.DealershipSalon">
               <MappingFragment StoreEntitySet="DealershipSalon">
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
