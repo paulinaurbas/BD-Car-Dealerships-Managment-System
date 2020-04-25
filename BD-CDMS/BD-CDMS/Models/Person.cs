@@ -11,8 +11,7 @@ namespace BD_CDMS.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class Person
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -22,8 +21,8 @@ namespace BD_CDMS.Models
         }
     
         public int Id { get; set; }
-        [Required, StringLength(50)] public string Name { get; set; }
-        [Required, StringLength(50)] public string Surname { get; set; }
+        public string Name { get; set; }
+        public string Surname { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Order> Order { get; set; }

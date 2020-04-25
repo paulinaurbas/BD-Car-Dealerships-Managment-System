@@ -10,11 +10,11 @@ using BD_CDMS.Models;
 
 namespace BD_CDMS.Controllers
 {
-    [Authorize(Roles = "Admin,Seller")]
     public class DealershipSalonController : Controller
     {
         private Entities _db = new Entities();
 
+        [Authorize(Roles = "Admin,Seller,Serviceman")]
         // GET: DealershipSalon
         public ActionResult Index()
         {
@@ -23,6 +23,7 @@ namespace BD_CDMS.Controllers
             return View(car.ToList());
         }
 
+        [Authorize(Roles = "Admin,Seller,Serviceman")]
         // GET: DealershipSalon/Details/5
         public ActionResult Details(int? id)
         {
@@ -37,6 +38,7 @@ namespace BD_CDMS.Controllers
             return View(car);
         }
 
+        [Authorize(Roles = "Admin")]
         // GET: DealershipSalon/Create
         public ActionResult Create()
         {
@@ -65,6 +67,7 @@ namespace BD_CDMS.Controllers
             return View(car);
         }
 
+        [Authorize(Roles = "Admin")]
         // GET: DealershipSalon/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -100,6 +103,7 @@ namespace BD_CDMS.Controllers
             return View(car);
         }
 
+        [Authorize(Roles = "Admin")]
         // GET: DealershipSalon/Delete/5
         public ActionResult Delete(int? id)
         {

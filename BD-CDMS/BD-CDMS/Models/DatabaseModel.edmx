@@ -31,16 +31,6 @@
           <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
           <Property Name="IdDealershipSalon" Type="int" />
         </EntityType>
-        <EntityType Name="Attribute">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
-          <Property Name="Type" Type="nchar" MaxLength="20" Nullable="false" />
-          <Property Name="Name" Type="nchar" MaxLength="50" Nullable="false" />
-          <Property Name="Description" Type="nchar" MaxLength="200" />
-          <Property Name="IdCar" Type="int" Nullable="false" />
-        </EntityType>
         <EntityType Name="Car">
           <Key>
             <PropertyRef Name="Id" />
@@ -64,6 +54,16 @@
           <Property Name="Address" Type="nchar" MaxLength="50" Nullable="false" />
           <Property Name="Email" Type="nchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="Feature">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Type" Type="nchar" MaxLength="20" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="nchar" MaxLength="200" />
+          <Property Name="IdCar" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Issue">
           <Key>
             <PropertyRef Name="Id" />
@@ -72,6 +72,7 @@
           <Property Name="IdCar" Type="int" Nullable="false" />
           <Property Name="IdServiceman" Type="nvarchar" MaxLength="128" />
           <Property Name="Description" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IsReady" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Order">
           <Key>
@@ -130,12 +131,12 @@
           <End Role="Car" Type="Self.Car" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="Attribute" Type="Self.Attribute" Multiplicity="*" />
+          <End Role="Feature" Type="Self.Feature" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Car">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Attribute">
+            <Dependent Role="Feature">
               <PropertyRef Name="IdCar" />
             </Dependent>
           </ReferentialConstraint>
@@ -249,9 +250,9 @@
         <EntityContainer Name="ModelStoreContainer">
           <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Attribute" EntityType="Self.Attribute" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Car" EntityType="Self.Car" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DealershipSalon" EntityType="Self.DealershipSalon" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Feature" EntityType="Self.Feature" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Issue" EntityType="Self.Issue" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Person" EntityType="Self.Person" Schema="dbo" store:Type="Tables" />
@@ -266,7 +267,7 @@
           </AssociationSet>
           <AssociationSet Name="FK_dboAttribute_dbo_Attribute_IdCar" Association="Self.FK_dboAttribute_dbo_Attribute_IdCar">
             <End Role="Car" EntitySet="Car" />
-            <End Role="Attribute" EntitySet="Attribute" />
+            <End Role="Feature" EntitySet="Feature" />
           </AssociationSet>
           <AssociationSet Name="FK_dboCar_dbo_Car_IdDealershipSalon" Association="Self.FK_dboCar_dbo_Car_IdDealershipSalon">
             <End Role="DealershipSalon" EntitySet="DealershipSalon" />
@@ -332,12 +333,7 @@
             <End Role="DealershipSalon" EntitySet="DealershipSalon" />
             <End Role="Seller" EntitySet="Seller" />
           </AssociationSet>
-          <EntitySet Name="Attribute" EntityType="Model.Attribute" />
           <EntitySet Name="Car" EntityType="Model.Car" />
-          <AssociationSet Name="FK_dboAttribute_dbo_Attribute_IdCar" Association="Model.FK_dboAttribute_dbo_Attribute_IdCar">
-            <End Role="Car" EntitySet="Car" />
-            <End Role="Attribute" EntitySet="Attribute" />
-          </AssociationSet>
           <AssociationSet Name="FK_dboCar_dbo_Car_IdDealershipSalon" Association="Model.FK_dboCar_dbo_Car_IdDealershipSalon">
             <End Role="DealershipSalon" EntitySet="DealershipSalon" />
             <End Role="Car" EntitySet="Car" />
@@ -358,6 +354,11 @@
           <AssociationSet Name="FK_dboOrder_dbo_Order_IdCustomer" Association="Model.FK_dboOrder_dbo_Order_IdCustomer">
             <End Role="Person" EntitySet="Person" />
             <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <EntitySet Name="Feature" EntityType="Model.Feature" />
+          <AssociationSet Name="FK_dboAttribute_dbo_Attribute_IdCar" Association="Model.FK_dboAttribute_dbo_Attribute_IdCar">
+            <End Role="Car" EntitySet="Car" />
+            <End Role="Feature" EntitySet="Feature" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="AspNetUserRoles">
@@ -415,6 +416,7 @@
           <Property Name="Description" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="AspNetUsers" Relationship="Model.FK_dboIssue_dbo_Issue_IdServiceman" FromRole="Issue" ToRole="AspNetUsers" />
           <NavigationProperty Name="Car" Relationship="Model.FK_dboIssue_dbo_Issue_IdCar" FromRole="Issue" ToRole="Car" />
+          <Property Name="IsReady" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="Person">
           <Key>
@@ -501,17 +503,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="Attribute">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="Type" Type="String" Nullable="false" MaxLength="20" FixedLength="true" Unicode="true" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
-          <Property Name="Description" Type="String" MaxLength="200" FixedLength="true" Unicode="true" />
-          <Property Name="IdCar" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Car" Relationship="Model.FK_dboAttribute_dbo_Attribute_IdCar" FromRole="Attribute" ToRole="Car" />
-        </EntityType>
         <EntityType Name="Car">
           <Key>
             <PropertyRef Name="Id" />
@@ -524,25 +515,11 @@
           <Property Name="IdDealershipSalon" Type="Int32" Nullable="false" />
           <Property Name="ImagePath" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
           <Property Name="IdSold" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Attribute" Relationship="Model.FK_dboAttribute_dbo_Attribute_IdCar" FromRole="Car" ToRole="Attribute" />
           <NavigationProperty Name="DealershipSalon" Relationship="Model.FK_dboCar_dbo_Car_IdDealershipSalon" FromRole="Car" ToRole="DealershipSalon" />
           <NavigationProperty Name="Issue" Relationship="Model.FK_dboIssue_dbo_Issue_IdCar" FromRole="Car" ToRole="Issue" />
           <NavigationProperty Name="Order" Relationship="Model.FK_dboOrder_dbo_Order_IdCar" FromRole="Car" ToRole="Order" />
+          <NavigationProperty Name="Feature" Relationship="Model.FK_dboAttribute_dbo_Attribute_IdCar" FromRole="Car" ToRole="Feature" />
         </EntityType>
-        <Association Name="FK_dboAttribute_dbo_Attribute_IdCar">
-          <End Type="Model.Car" Role="Car" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="Model.Attribute" Role="Attribute" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Car">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Attribute">
-              <PropertyRef Name="IdCar" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_dboCar_dbo_Car_IdDealershipSalon">
           <End Type="Model.DealershipSalon" Role="DealershipSalon" Multiplicity="1" />
           <End Type="Model.Car" Role="Car" Multiplicity="*" />
@@ -623,6 +600,31 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Feature">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Type" Type="String" Nullable="false" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="200" FixedLength="true" Unicode="true" />
+          <Property Name="IdCar" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Car" Relationship="Model.FK_dboAttribute_dbo_Attribute_IdCar" FromRole="Feature" ToRole="Car" />
+        </EntityType>
+        <Association Name="FK_dboAttribute_dbo_Attribute_IdCar">
+          <End Type="Model.Car" Role="Car" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model.Feature" Role="Feature" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Car">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Feature">
+              <PropertyRef Name="IdCar" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -670,6 +672,7 @@
           <EntitySetMapping Name="Issue">
             <EntityTypeMapping TypeName="Model.Issue">
               <MappingFragment StoreEntitySet="Issue">
+                <ScalarProperty Name="IsReady" ColumnName="IsReady" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="IdServiceman" ColumnName="IdServiceman" />
                 <ScalarProperty Name="IdCar" ColumnName="IdCar" />
@@ -691,17 +694,6 @@
               <MappingFragment StoreEntitySet="Seller">
                 <ScalarProperty Name="IdAspNetUser" ColumnName="IdAspNetUser" />
                 <ScalarProperty Name="IdDealershipSalon" ColumnName="IdDealershipSalon" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Attribute">
-            <EntityTypeMapping TypeName="Model.Attribute">
-              <MappingFragment StoreEntitySet="Attribute">
-                <ScalarProperty Name="IdCar" ColumnName="IdCar" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -728,6 +720,17 @@
                 <ScalarProperty Name="IdSeller" ColumnName="IdSeller" />
                 <ScalarProperty Name="IdCustomer" ColumnName="IdCustomer" />
                 <ScalarProperty Name="IdCar" ColumnName="IdCar" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Feature">
+            <EntityTypeMapping TypeName="Model.Feature">
+              <MappingFragment StoreEntitySet="Feature">
+                <ScalarProperty Name="IdCar" ColumnName="IdCar" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

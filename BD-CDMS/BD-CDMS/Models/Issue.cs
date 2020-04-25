@@ -18,6 +18,7 @@ namespace BD_CDMS.Models
         public int IdCar { get; set; }
         public string IdServiceman { get; set; }
         public string Description { get; set; }
+        public bool IsReady { get; set; }
     
         public virtual AspNetUsers AspNetUsers { get; set; }
         public virtual Car Car { get; set; }

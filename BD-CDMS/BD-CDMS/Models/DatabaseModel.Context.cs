@@ -31,8 +31,8 @@ namespace BD_CDMS.Models
         public virtual DbSet<Issue> Issue { get; set; }
         public virtual DbSet<Person> Person { get; set; }
         public virtual DbSet<Seller> Seller { get; set; }
-        public virtual DbSet<Attribute> Attribute { get; set; }
         public virtual DbSet<Car> Car { get; set; }
         public virtual DbSet<Order> Order { get; set; }
+        public virtual DbSet<Feature> Feature { get; set; }
     }
 }

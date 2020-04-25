@@ -72,6 +72,11 @@
                         <li>@Html.ActionLink("Create Order", "Create", "Orders") |</li>
                         <li>@Html.ActionLink("Create Person", "CreateOrder", "People")</li>
                     }
+
+                    if (System.Web.HttpContext.Current.User.IsInRole("Serviceman"))
+                    {
+                        @Html.ActionLink("Add feature", "IndexCar", "Features", new { id = item.Id }, new { @class = "btn btn-success" })
+                    }
                 }
             </td>
         </tr>
