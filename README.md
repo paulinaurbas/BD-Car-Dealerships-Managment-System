@@ -20,14 +20,14 @@
 1. go to Log in ([`https://localhost:44381/Account/Login`](https://localhost:44381/Account/Login)) tab and login with seller credentials which are ```admin@gmail.com```:```ASDqwe`12```
 2. go to whatever tab and have fun being administrator. Now you can create, read, update and delete all the things
 
-### [Seller sends a car to the service to add a feature or fix an issue](https://github.com/paulinaurbas/BD-Car-Dealerships-Managment-System/issues/6)
+### [seller sends a car to the service to add a feature or fix an issue](https://github.com/paulinaurbas/BD-Car-Dealerships-Managment-System/issues/6)
 1. go to Log in ([`https://localhost:44381/Account/Login`](https://localhost:44381/Account/Login)) tab and login with seller credentials which are ```seller@gmail.com```:```ASDqwe`12```
 2. go to Salon ([`https://localhost:44381/DealershipSalon`](https://localhost:44381/DealershipSalon)) tab to list the available cars
 3. click `Create Order` next to the chosen car to create new order
 4. choose the available car, buyer, add some status, add feature and click `Create`
 5. see your order in the list of orders and feature in the list of features
 
-### [Serviceman lists cars that require service and mark them as done](https://github.com/paulinaurbas/BD-Car-Dealerships-Managment-System/issues/4)
+### [serviceman lists cars that require service and mark them as done](https://github.com/paulinaurbas/BD-Car-Dealerships-Managment-System/issues/4)
 1. go to Log in ([`https://localhost:44381/Account/Login`](https://localhost:44381/Account/Login)) tab and login with seller credentials which are ```serviceman@gmail.com```:```ASDqwe`12```
 2. go to Issue ([`https://localhost:44381/DealershipSalon`](https://localhost:44381/Issue)) tab to list the to do issue 
 3. go to Issue ([`https://localhost:44381/DealershipSalon`](https://localhost:44381/Issue/IndexServiceman)) tab to list the in progres issue
