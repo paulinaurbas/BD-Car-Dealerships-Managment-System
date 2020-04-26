@@ -17,20 +17,18 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Car System", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                     <li>@Html.ActionLink("Salon", "Index", "DealershipSalon")</li>
                     <li>@Html.ActionLink("People", "Index", "People")</li>
                     <li>@Html.ActionLink("Orders", "Index", "Orders")</li>
                     <li>@Html.ActionLink("Feature", "Index", "Features")</li>
-                    <li>@Html.ActionLink("Issues", "Index", "Issues")</li>
-                    <li>@Html.ActionLink("IndexServiceman", "IndexServiceman", "Issues")</li>
-                    <li>@Html.ActionLink("IndexHistory", "IndexHistory", "Issues")</li>
+                    <li>@Html.ActionLink("Serviceman Issues", "Index", "Issues")</li>
+                    <li>@Html.ActionLink("Serviceman Inprogress", "IndexServiceman", "Issues")</li>
+                    <li>@Html.ActionLink("Serviceman history issues", "IndexHistory", "Issues")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
