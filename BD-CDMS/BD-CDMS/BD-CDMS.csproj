@@ -332,6 +332,7 @@
     <Content Include="Views\Issues\Index.cshtml" />
     <Content Include="Views\Issues\IndexServiceman.cshtml" />
     <Content Include="Views\Issues\IndexHistory.cshtml" />
+    <Content Include="Views\Issues\IndexAdmin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

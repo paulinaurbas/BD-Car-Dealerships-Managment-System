@@ -43,8 +43,16 @@ namespace BD_CDMS.Controllers
         [Authorize(Roles = "Admin,Serviceman,Seller")]
         public ActionResult Create()
         {
+            var cars = db.Car.Select(n => new
+            {
+                Id = n.Id,
+                Description = n.Brand + " " + n.Model + " VIN: " + n.VIN
+            }).ToList();
+
+            ViewBag.IdCar = new SelectList(cars, "Id", "Description");
+
             ViewBag.IdServiceman = new SelectList(db.AspNetUsers, "Id", "Email");
-            ViewBag.IdCar = new SelectList(db.Car, "Id", "Brand");
+            //ViewBag.IdCar = new SelectList(db.Car, "Id", "Brand");
             return View();
         }
 
@@ -61,11 +69,20 @@ namespace BD_CDMS.Controllers
             {
                 db.Issue.Add(issue);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+
+                if (System.Web.HttpContext.Current.User.IsInRole("Seller") && !System.Web.HttpContext.Current.User.IsInRole("Admin"))
+                {
+                    return RedirectToAction("Index", "DealershipSalon");
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
             }
 
             ViewBag.IdServiceman = new SelectList(db.AspNetUsers, "Id", "Email", issue.IdServiceman);
             ViewBag.IdCar = new SelectList(db.Car, "Id", "Brand", issue.IdCar);
+
             return View(issue);
         }
 
@@ -82,8 +99,16 @@ namespace BD_CDMS.Controllers
             {
                 return HttpNotFound();
             }
+
+            var cars = db.Car.Select(n => new
+            {
+                Id = n.Id,
+                Description = n.Brand + " " + n.Model + " VIN: " + n.VIN
+            }).ToList();
+
+            ViewBag.IdCar = new SelectList(cars, "Id", "Description");
             ViewBag.IdServiceman = new SelectList(db.AspNetUsers, "Id", "Email", issue.IdServiceman);
-            ViewBag.IdCar = new SelectList(db.Car, "Id", "Brand", issue.IdCar);
+            //ViewBag.IdCar = new SelectList(db.Car, "Id", "Brand", issue.IdCar);
             return View(issue);
         }
 
@@ -157,6 +182,14 @@ namespace BD_CDMS.Controllers
         public ActionResult IndexHistory()
         {
             var issue = db.Issue.Include(i => i.AspNetUsers).Include(i => i.Car).Where(b => b.IsReady == true).Where(t => t.IdServiceman != null);
+            return View(issue.ToList());
+        }
+
+        // GET: Issues
+        [Authorize(Roles = "Admin,Serviceman")]
+        public ActionResult IndexAdmin()
+        {
+            var issue = db.Issue.Include(i => i.AspNetUsers).Include(i => i.Car);
             return View(issue.ToList());
         }
 

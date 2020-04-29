@@ -16,11 +16,20 @@ namespace BD_CDMS.Controllers
 
         [Authorize(Roles = "Admin,Seller,Serviceman")]
         // GET: DealershipSalon
-        public ActionResult Index()
+        public ActionResult Index(string searchString)
         {
-            var car = _db.Car.Select(n => n).Where(c => c.IdSold == false);
+            if (searchString != null) 
+            {
+                var car = _db.Car.Select(n => n).Where(c => c.IdSold == false).Where(d => d.DealershipSalon.Name.Contains(searchString));
 
-            return View(car.ToList());
+                return View(car.ToList());
+            }
+            else
+            {
+                var car = _db.Car.Select(n => n).Where(c => c.IdSold == false);
+
+                return View(car.ToList());
+            }
         }
 
         [Authorize(Roles = "Admin,Seller,Serviceman")]
@@ -42,7 +51,13 @@ namespace BD_CDMS.Controllers
         // GET: DealershipSalon/Create
         public ActionResult Create()
         {
-            ViewBag.IdDealershipSalon = new SelectList(_db.DealershipSalon, "Id", "PhoneNumber");
+            var dealershipSalons = _db.DealershipSalon.Select(n => new
+            {
+                Id = n.Id,
+                Description = n.Name
+            }).ToList();
+
+            ViewBag.IdDealershipSalon = new SelectList(dealershipSalons, "Id", "Description");
 
             return View();
         }
@@ -78,8 +93,14 @@ namespace BD_CDMS.Controllers
 
             if (car == null)
                 return HttpNotFound();
+            var dealershipSalons = _db.DealershipSalon.Select(n => new
+            {
+                Id = n.Id,
+                Description = n.Name
+            }).ToList();
 
-            ViewBag.IdDealershipSalon = new SelectList(_db.DealershipSalon, "Id", "PhoneNumber", car.IdDealershipSalon);
+            ViewBag.IdDealershipSalon = new SelectList(dealershipSalons, "Id", "Description");
+            //ViewBag.IdDealershipSalon = new SelectList(_db.DealershipSalon, "Id", "PhoneNumber", car.IdDealershipSalon);
 
             return View(car);
         }

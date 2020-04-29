@@ -26,13 +26,13 @@
             @Html.DisplayFor(model => model.Date)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.AspNetUsers.Email)
-        </dt>
+    </dl>
 
-        <dd>
-            @Html.DisplayFor(model => model.AspNetUsers.Email)
-        </dd>
+
+    <h5>Car</h5>
+
+    <dl class="dl-horizontal">
+
 
         <dt>
             @Html.DisplayNameFor(model => model.Car.Brand)
@@ -43,11 +43,57 @@
         </dd>
 
         <dt>
+            @Html.DisplayNameFor(model => model.Car.Model)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Car.Model)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Car.VIN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Car.VIN)
+        </dd>
+
+    </dl>
+
+
+    <h5>Seller</h5>
+
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AspNetUsers.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AspNetUsers.Email)
+        </dd>
+
+    </dl>
+
+
+    <h5>Client</h5>
+
+    <dl class="dl-horizontal">
+
+        <dt>
             @Html.DisplayNameFor(model => model.Person.Name)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.Person.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Person.Surname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Person.Surname)
         </dd>
 
     </dl>

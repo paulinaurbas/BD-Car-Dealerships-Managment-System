@@ -43,7 +43,15 @@ namespace BD_CDMS.Controllers
         // GET: Features/Create
         public ActionResult Create()
         {
-            ViewBag.IdCar = new SelectList(db.Car, "Id", "VIN");
+            var cars = db.Car.Select(n => new
+            {
+                Id = n.Id,
+                Description = n.Brand + " " + n.Model + " VIN: " + n.VIN
+            }).ToList();
+
+            ViewBag.IdCar = new SelectList(cars, "Id", "Description");
+            //ViewBag.IdCar = new SelectList(db.Car, "Id", "Brand");
+
             return View();
         }
 
@@ -81,7 +89,15 @@ namespace BD_CDMS.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.IdCar = new SelectList(db.Car, "Id", "Brand", feature.IdCar);
+
+            var cars = db.Car.Select(n => new
+            {
+                Id = n.Id,
+                Description = n.Brand + " " + n.Model + " VIN: " + n.VIN
+            }).ToList();
+
+            ViewBag.IdCar = new SelectList(cars, "Id", "Description");
+            //ViewBag.IdCar = new SelectList(db.Car, "Id", "Brand", feature.IdCar);
             return View(feature);
         }
 

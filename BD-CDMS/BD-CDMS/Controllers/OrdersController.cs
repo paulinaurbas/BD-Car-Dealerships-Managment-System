@@ -45,9 +45,26 @@ namespace BD_CDMS.Controllers
         // GET: Orders/Create
         public ActionResult Create()
         {
+            var customers = _db.Person.Select(c => new
+            {
+                Id = c.Id,
+                Description = c.Name + " " + c.Surname
+            }).ToList();
+
+            var cars = _db.Car.Select(n => new
+            {
+                Id = n.Id,
+                IdSold = n.IdSold,
+                Description = n.Brand + " " + n.Model + " VIN: " + n.VIN
+            }).Where(c => c.IdSold == false).ToList();
+
+
+            ViewBag.IdCustomer = new SelectList(customers, "Id", "Description");
+            ViewBag.IdCar = new SelectList(cars, "Id", "Description");
+
             ViewBag.IdSeller = new SelectList(_db.AspNetUsers, "Id", "Email");
-            ViewBag.IdCar = new SelectList(_db.Car.Select(n => n).Where(c => c.IdSold == false), "Id", "Brand");
-            ViewBag.IdCustomer = new SelectList(_db.Person, "Id", "Name");
+            //ViewBag.IdCar = new SelectList(_db.Car.Select(n => n).Where(c => c.IdSold == false), "Id", "Brand");
+            //ViewBag.IdCustomer = new SelectList(_db.Person, "Id", "Name");
 
             return View();
         }
@@ -99,9 +116,27 @@ namespace BD_CDMS.Controllers
             {
                 return HttpNotFound();
             }
+
+            var customers = _db.Person.Select(c => new
+            {
+                Id = c.Id,
+                Description = c.Name + " " + c.Surname
+            }).ToList();
+
+            var cars = _db.Car.Select(n => new
+            {
+                Id = n.Id,
+                IdSold = n.IdSold,
+                Description = n.Brand + " " + n.Model + " VIN: " + n.VIN
+            }).Where(c => c.IdSold == false).ToList();
+
+
+            ViewBag.IdCustomer = new SelectList(customers, "Id", "Description");
+            ViewBag.IdCar = new SelectList(cars, "Id", "Description");
+
             ViewBag.IdSeller = new SelectList(_db.AspNetUsers, "Id", "Email", order.IdSeller);
-            ViewBag.IdCar = new SelectList(_db.Car, "Id", "Brand", order.IdCar);
-            ViewBag.IdCustomer = new SelectList(_db.Person, "Id", "Name", order.IdCustomer);
+            //ViewBag.IdCar = new SelectList(_db.Car, "Id", "Brand", order.IdCar);
+            //ViewBag.IdCustomer = new SelectList(_db.Person, "Id", "Name", order.IdCustomer);
             return View(order);
         }
 
