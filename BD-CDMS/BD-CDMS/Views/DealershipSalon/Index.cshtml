@@ -18,10 +18,18 @@
 
 @using (Html.BeginForm())
 {
-    <p>
-        Find by salon name: @Html.TextBox("SearchString")
-        <input type="submit" value="Search" />
-    </p>
+<p>
+    Find by salon name: @Html.TextBox("searchSalon")
+    Find by color: @Html.TextBox("searchColor")
+    Find by brand: @Html.TextBox("SearchBrand")
+    Find by model: @Html.TextBox("SearchModel")
+    Find by gearbox: @Html.TextBox("SearchGearbox")
+    Find by engine: @Html.TextBox("SearchEngine")
+    Find by car type: @Html.TextBox("SearchCarType")
+    Min prise<input type="number" name="SearchMinPrice" step="0.01" />
+    Max prise <input type="number" name="SearchMaxPrice" step="0.01" />
+    <input type="submit" value="Search" />
+</p>
 }
 
 <table class="table">
@@ -39,7 +47,7 @@
             @Html.DisplayNameFor(model => model.Color)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ImagePath)
+            @Html.DisplayNameFor(model => model.Price)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.DealershipSalon.Name)
@@ -63,7 +71,7 @@
                 @Html.DisplayFor(modelItem => item.Color)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ImagePath)
+                @Html.DisplayFor(modelItem => item.Price)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DealershipSalon.Name)

@@ -51,11 +51,59 @@
         </dd>
 
         <dt>
+            @Html.DisplayNameFor(model => model.IdSold)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IdSold)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HP)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HP)
+        </dd>
+
+        <dt>
+            CarType
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CarType.Type)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.DealershipSalon.PhoneNumber)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.DealershipSalon.PhoneNumber)
+        </dd>
+
+        <dt>
+            Engine
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Engine.Type)
+        </dd>
+
+        <dt>
+            Gearbox
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Gearbox.Type)
         </dd>
 
     </dl>

@@ -22,7 +22,7 @@ namespace BD_CDMS.Models
         public System.DateTime Date { get; set; }
     
         public virtual AspNetUsers AspNetUsers { get; set; }
-        public virtual Car Car { get; set; }
         public virtual Person Person { get; set; }
+        public virtual Car Car { get; set; }
     }
 }

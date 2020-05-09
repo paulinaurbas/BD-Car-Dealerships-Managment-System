@@ -12,21 +12,42 @@ namespace BD_CDMS.Controllers
 {
     public class DealershipSalonController : Controller
     {
-        private Entities _db = new Entities();
+        private Entities db = new Entities();
 
         [Authorize(Roles = "Admin,Seller,Serviceman")]
         // GET: DealershipSalon
-        public ActionResult Index(string searchString)
+        public ActionResult Index(string searchSalon, string searchColor, string SearchBrand, string SearchModel, string SearchGearbox, string SearchEngine, string SearchCarType,
+            decimal? SearchMinPrice, decimal? SearchMaxPrice)
         {
-            if (searchString != null) 
+            //var car = db.Car.Include(c => c.CarType).Include(c => c.DealershipSalon).Include(c => c.Engine).Include(c => c.Gearbox);
+            //return View(car.ToList());
+
+            if (searchSalon != null)
             {
-                var car = _db.Car.Select(n => n).Where(c => c.IdSold == false).Where(d => d.DealershipSalon.Name.Contains(searchString));
+                var car = db.Car.Select(n => n).
+                    Where(c => c.IdSold == false).
+                    Where(d => d.DealershipSalon.Name.Contains(searchSalon)).
+                    Where(d => d.Color.Contains(searchColor)).
+                    Where(d => d.Brand.Contains(SearchBrand)).
+                    Where(d => d.Model.Contains(SearchModel)).
+                    Where(d => d.Brand.Contains(SearchGearbox)).
+                    Where(d => d.Brand.Contains(SearchEngine)).
+                    Where(d => d.Brand.Contains(SearchCarType));
+
+                if (SearchMinPrice != null)
+                {
+                    car = car.Where(d => d.Price >= SearchMinPrice);
+                }
+                if (SearchMaxPrice != null)
+                {
+                    car = car.Where(d => d.Price <= SearchMaxPrice);
+                }
 
                 return View(car.ToList());
             }
             else
             {
-                var car = _db.Car.Select(n => n).Where(c => c.IdSold == false);
+                var car = db.Car.Select(n => n).Where(c => c.IdSold == false);
 
                 return View(car.ToList());
             }
@@ -37,13 +58,14 @@ namespace BD_CDMS.Controllers
         public ActionResult Details(int? id)
         {
             if (id == null)
+            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-
-            Car car = _db.Car.Find(id);
-
+            }
+            Car car = db.Car.Find(id);
             if (car == null)
+            {
                 return HttpNotFound();
-
+            }
             return View(car);
         }
 
@@ -51,7 +73,11 @@ namespace BD_CDMS.Controllers
         // GET: DealershipSalon/Create
         public ActionResult Create()
         {
-            var dealershipSalons = _db.DealershipSalon.Select(n => new
+            ViewBag.IdCarType = new SelectList(db.CarType, "Id", "Type");
+            ViewBag.IdEngine = new SelectList(db.Engine, "Id", "Type");
+            ViewBag.IdGearbox = new SelectList(db.Gearbox, "Id", "Type");
+
+            var dealershipSalons = db.DealershipSalon.Select(n => new
             {
                 Id = n.Id,
                 Description = n.Name
@@ -67,17 +93,26 @@ namespace BD_CDMS.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Brand,Model,VIN,Color,IdDealershipSalon,ImagePath")] Car car)
+        public ActionResult Create([Bind(Include = "Id,Brand,Model,VIN,Color,IdDealershipSalon,ImagePath,IdSold,Price,HP,IdCarType,IdEngine,IdGearbox")] Car car)
         {
             if (ModelState.IsValid)
             {
-                _db.Car.Add(car);
-                _db.SaveChanges();
-
+                db.Car.Add(car);
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.IdDealershipSalon = new SelectList(_db.DealershipSalon, "Id", "PhoneNumber", car.IdDealershipSalon);
+            ViewBag.IdCarType = new SelectList(db.CarType, "Id", "Type", car.IdCarType);
+            ViewBag.IdEngine = new SelectList(db.Engine, "Id", "Type", car.IdEngine);
+            ViewBag.IdGearbox = new SelectList(db.Gearbox, "Id", "Type", car.IdGearbox);
+
+            var dealershipSalons = db.DealershipSalon.Select(n => new
+            {
+                Id = n.Id,
+                Description = n.Name
+            }).ToList();
+
+            ViewBag.IdDealershipSalon = new SelectList(dealershipSalons, "Id", "Description");
 
             return View(car);
         }
@@ -87,20 +122,25 @@ namespace BD_CDMS.Controllers
         public ActionResult Edit(int? id)
         {
             if (id == null)
+            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-
-            Car car = _db.Car.Find(id);
-
+            }
+            Car car = db.Car.Find(id);
             if (car == null)
+            {
                 return HttpNotFound();
-            var dealershipSalons = _db.DealershipSalon.Select(n => new
+            }
+            ViewBag.IdCarType = new SelectList(db.CarType, "Id", "Type", car.IdCarType);
+            ViewBag.IdEngine = new SelectList(db.Engine, "Id", "Type", car.IdEngine);
+            ViewBag.IdGearbox = new SelectList(db.Gearbox, "Id", "Type", car.IdGearbox);
+
+            var dealershipSalons = db.DealershipSalon.Select(n => new
             {
                 Id = n.Id,
                 Description = n.Name
             }).ToList();
 
             ViewBag.IdDealershipSalon = new SelectList(dealershipSalons, "Id", "Description");
-            //ViewBag.IdDealershipSalon = new SelectList(_db.DealershipSalon, "Id", "PhoneNumber", car.IdDealershipSalon);
 
             return View(car);
         }
@@ -110,16 +150,25 @@ namespace BD_CDMS.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Brand,Model,VIN,Color,IdDealershipSalon,ImagePath")] Car car)
+        public ActionResult Edit([Bind(Include = "Id,Brand,Model,VIN,Color,IdDealershipSalon,ImagePath,IdSold,Price,HP,IdCarType,IdEngine,IdGearbox")] Car car)
         {
             if (ModelState.IsValid)
             {
-                _db.Entry(car).State = EntityState.Modified;
-                _db.SaveChanges();
-
+                db.Entry(car).State = EntityState.Modified;
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.IdDealershipSalon = new SelectList(_db.DealershipSalon, "Id", "PhoneNumber", car.IdDealershipSalon);
+            ViewBag.IdCarType = new SelectList(db.CarType, "Id", "Type", car.IdCarType);
+            ViewBag.IdEngine = new SelectList(db.Engine, "Id", "Type", car.IdEngine);
+            ViewBag.IdGearbox = new SelectList(db.Gearbox, "Id", "Type", car.IdGearbox);
+
+            var dealershipSalons = db.DealershipSalon.Select(n => new
+            {
+                Id = n.Id,
+                Description = n.Name
+            }).ToList();
+
+            ViewBag.IdDealershipSalon = new SelectList(dealershipSalons, "Id", "Description");
 
             return View(car);
         }
@@ -129,38 +178,36 @@ namespace BD_CDMS.Controllers
         public ActionResult Delete(int? id)
         {
             if (id == null)
+            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-
-            Car car = _db.Car.Find(id);
-
+            }
+            Car car = db.Car.Find(id);
             if (car == null)
+            {
                 return HttpNotFound();
-
+            }
             return View(car);
         }
 
+        [Authorize(Roles = "Admin")]
         // POST: DealershipSalon/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Car car = _db.Car.Find(id);
-
-            _db.Car.Remove(car);
-            _db.SaveChanges();
-
+            Car car = db.Car.Find(id);
+            db.Car.Remove(car);
+            db.SaveChanges();
             return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-                _db.Dispose();
-
+            {
+                db.Dispose();
+            }
             base.Dispose(disposing);
         }
-
-
-
     }
 }

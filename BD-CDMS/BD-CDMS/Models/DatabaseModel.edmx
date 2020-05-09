@@ -43,6 +43,18 @@
           <Property Name="IdDealershipSalon" Type="int" Nullable="false" />
           <Property Name="ImagePath" Type="nchar" MaxLength="100" />
           <Property Name="IdSold" Type="bit" Nullable="false" />
+          <Property Name="Price" Type="money" Nullable="false" />
+          <Property Name="HP" Type="int" Nullable="false" />
+          <Property Name="IdCarType" Type="int" Nullable="false" />
+          <Property Name="IdEngine" Type="int" Nullable="false" />
+          <Property Name="IdGearbox" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CarType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Type" Type="nchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="DealershipSalon">
           <Key>
@@ -54,6 +66,13 @@
           <Property Name="Address" Type="nchar" MaxLength="50" Nullable="false" />
           <Property Name="Email" Type="nchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="Engine">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Type" Type="nchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="Feature">
           <Key>
             <PropertyRef Name="Id" />
@@ -63,6 +82,13 @@
           <Property Name="Name" Type="nchar" MaxLength="50" Nullable="false" />
           <Property Name="Description" Type="nchar" MaxLength="200" />
           <Property Name="IdCar" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Gearbox">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Type" Type="nchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Issue">
           <Key>
@@ -141,6 +167,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_dboCar_dbo_Car_IdCarType">
+          <End Role="CarType" Type="Self.CarType" Multiplicity="1" />
+          <End Role="Car" Type="Self.Car" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CarType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Car">
+              <PropertyRef Name="IdCarType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_dboCar_dbo_Car_IdDealershipSalon">
           <End Role="DealershipSalon" Type="Self.DealershipSalon" Multiplicity="1" />
           <End Role="Car" Type="Self.Car" Multiplicity="*" />
@@ -150,6 +188,30 @@
             </Principal>
             <Dependent Role="Car">
               <PropertyRef Name="IdDealershipSalon" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dboCar_dbo_Car_IdEngine">
+          <End Role="Engine" Type="Self.Engine" Multiplicity="1" />
+          <End Role="Car" Type="Self.Car" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Engine">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Car">
+              <PropertyRef Name="IdEngine" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dboCar_dbo_Car_IdGearbox">
+          <End Role="Gearbox" Type="Self.Gearbox" Multiplicity="1" />
+          <End Role="Car" Type="Self.Car" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gearbox">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Car">
+              <PropertyRef Name="IdGearbox" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -251,8 +313,11 @@
           <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Car" EntityType="Self.Car" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CarType" EntityType="Self.CarType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DealershipSalon" EntityType="Self.DealershipSalon" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Engine" EntityType="Self.Engine" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Feature" EntityType="Self.Feature" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Gearbox" EntityType="Self.Gearbox" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Issue" EntityType="Self.Issue" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Person" EntityType="Self.Person" Schema="dbo" store:Type="Tables" />
@@ -269,8 +334,20 @@
             <End Role="Car" EntitySet="Car" />
             <End Role="Feature" EntitySet="Feature" />
           </AssociationSet>
+          <AssociationSet Name="FK_dboCar_dbo_Car_IdCarType" Association="Self.FK_dboCar_dbo_Car_IdCarType">
+            <End Role="CarType" EntitySet="CarType" />
+            <End Role="Car" EntitySet="Car" />
+          </AssociationSet>
           <AssociationSet Name="FK_dboCar_dbo_Car_IdDealershipSalon" Association="Self.FK_dboCar_dbo_Car_IdDealershipSalon">
             <End Role="DealershipSalon" EntitySet="DealershipSalon" />
+            <End Role="Car" EntitySet="Car" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dboCar_dbo_Car_IdEngine" Association="Self.FK_dboCar_dbo_Car_IdEngine">
+            <End Role="Engine" EntitySet="Engine" />
+            <End Role="Car" EntitySet="Car" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dboCar_dbo_Car_IdGearbox" Association="Self.FK_dboCar_dbo_Car_IdGearbox">
+            <End Role="Gearbox" EntitySet="Gearbox" />
             <End Role="Car" EntitySet="Car" />
           </AssociationSet>
           <AssociationSet Name="FK_dboIssue_dbo_Issue_IdCar" Association="Self.FK_dboIssue_dbo_Issue_IdCar">
@@ -333,22 +410,9 @@
             <End Role="DealershipSalon" EntitySet="DealershipSalon" />
             <End Role="Seller" EntitySet="Seller" />
           </AssociationSet>
-          <EntitySet Name="Car" EntityType="Model.Car" />
-          <AssociationSet Name="FK_dboCar_dbo_Car_IdDealershipSalon" Association="Model.FK_dboCar_dbo_Car_IdDealershipSalon">
-            <End Role="DealershipSalon" EntitySet="DealershipSalon" />
-            <End Role="Car" EntitySet="Car" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dboIssue_dbo_Issue_IdCar" Association="Model.FK_dboIssue_dbo_Issue_IdCar">
-            <End Role="Car" EntitySet="Car" />
-            <End Role="Issue" EntitySet="Issue" />
-          </AssociationSet>
           <EntitySet Name="Order" EntityType="Model.Order" />
           <AssociationSet Name="FK_dboOrder_dbo_Order_IdSeller" Association="Model.FK_dboOrder_dbo_Order_IdSeller">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="Order" EntitySet="Order" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dboOrder_dbo_Order_IdCar" Association="Model.FK_dboOrder_dbo_Order_IdCar">
-            <End Role="Car" EntitySet="Car" />
             <End Role="Order" EntitySet="Order" />
           </AssociationSet>
           <AssociationSet Name="FK_dboOrder_dbo_Order_IdCustomer" Association="Model.FK_dboOrder_dbo_Order_IdCustomer">
@@ -356,11 +420,39 @@
             <End Role="Order" EntitySet="Order" />
           </AssociationSet>
           <EntitySet Name="Feature" EntityType="Model.Feature" />
+          <EntitySet Name="Car" EntityType="Model.Car" />
+          <EntitySet Name="CarType" EntityType="Model.CarType" />
+          <EntitySet Name="Engine" EntityType="Model.Engine" />
+          <EntitySet Name="Gearbox" EntityType="Model.Gearbox" />
           <AssociationSet Name="FK_dboAttribute_dbo_Attribute_IdCar" Association="Model.FK_dboAttribute_dbo_Attribute_IdCar">
             <End Role="Car" EntitySet="Car" />
             <End Role="Feature" EntitySet="Feature" />
           </AssociationSet>
-        </EntityContainer>
+          <AssociationSet Name="FK_dboCar_dbo_Car_IdCarType" Association="Model.FK_dboCar_dbo_Car_IdCarType">
+            <End Role="CarType" EntitySet="CarType" />
+            <End Role="Car" EntitySet="Car" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dboCar_dbo_Car_IdDealershipSalon" Association="Model.FK_dboCar_dbo_Car_IdDealershipSalon">
+            <End Role="DealershipSalon" EntitySet="DealershipSalon" />
+            <End Role="Car" EntitySet="Car" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dboCar_dbo_Car_IdEngine" Association="Model.FK_dboCar_dbo_Car_IdEngine">
+            <End Role="Engine" EntitySet="Engine" />
+            <End Role="Car" EntitySet="Car" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dboCar_dbo_Car_IdGearbox" Association="Model.FK_dboCar_dbo_Car_IdGearbox">
+            <End Role="Gearbox" EntitySet="Gearbox" />
+            <End Role="Car" EntitySet="Car" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dboIssue_dbo_Issue_IdCar" Association="Model.FK_dboIssue_dbo_Issue_IdCar">
+            <End Role="Car" EntitySet="Car" />
+            <End Role="Issue" EntitySet="Issue" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dboOrder_dbo_Order_IdCar" Association="Model.FK_dboOrder_dbo_Order_IdCar">
+            <End Role="Car" EntitySet="Car" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          </EntityContainer>
         <EntityType Name="AspNetUserRoles">
           <Key>
             <PropertyRef Name="UserId" />
@@ -403,8 +495,8 @@
           <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
           <NavigationProperty Name="AspNetUsers" Relationship="Model.FK_dboAspNetUsers_dbo_AspNetUsers_IdDealershipSalon" FromRole="DealershipSalon" ToRole="AspNetUsers" />
           <NavigationProperty Name="Seller" Relationship="Model.FK_dboSeller_dbo_Seller_IdDealershipSalon" FromRole="DealershipSalon" ToRole="Seller" />
-          <NavigationProperty Name="Car" Relationship="Model.FK_dboCar_dbo_Car_IdDealershipSalon" FromRole="DealershipSalon" ToRole="Car" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Car" Relationship="Model.FK_dboCar_dbo_Car_IdDealershipSalon" FromRole="DealershipSalon" ToRole="Car" />
         </EntityType>
         <EntityType Name="Issue">
           <Key>
@@ -415,8 +507,8 @@
           <Property Name="IdServiceman" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="AspNetUsers" Relationship="Model.FK_dboIssue_dbo_Issue_IdServiceman" FromRole="Issue" ToRole="AspNetUsers" />
-          <NavigationProperty Name="Car" Relationship="Model.FK_dboIssue_dbo_Issue_IdCar" FromRole="Issue" ToRole="Car" />
           <Property Name="IsReady" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Car" Relationship="Model.FK_dboIssue_dbo_Issue_IdCar" FromRole="Issue" ToRole="Car" />
         </EntityType>
         <EntityType Name="Person">
           <Key>
@@ -503,47 +595,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="Car">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Brand" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Model" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="VIN" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
-          <Property Name="Color" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="IdDealershipSalon" Type="Int32" Nullable="false" />
-          <Property Name="ImagePath" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
-          <Property Name="IdSold" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="DealershipSalon" Relationship="Model.FK_dboCar_dbo_Car_IdDealershipSalon" FromRole="Car" ToRole="DealershipSalon" />
-          <NavigationProperty Name="Issue" Relationship="Model.FK_dboIssue_dbo_Issue_IdCar" FromRole="Car" ToRole="Issue" />
-          <NavigationProperty Name="Order" Relationship="Model.FK_dboOrder_dbo_Order_IdCar" FromRole="Car" ToRole="Order" />
-          <NavigationProperty Name="Feature" Relationship="Model.FK_dboAttribute_dbo_Attribute_IdCar" FromRole="Car" ToRole="Feature" />
-        </EntityType>
-        <Association Name="FK_dboCar_dbo_Car_IdDealershipSalon">
-          <End Type="Model.DealershipSalon" Role="DealershipSalon" Multiplicity="1" />
-          <End Type="Model.Car" Role="Car" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="DealershipSalon">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Car">
-              <PropertyRef Name="IdDealershipSalon" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dboIssue_dbo_Issue_IdCar">
-          <End Type="Model.Car" Role="Car" Multiplicity="1" />
-          <End Type="Model.Issue" Role="Issue" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Car">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Issue">
-              <PropertyRef Name="IdCar" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="Order">
           <Key>
             <PropertyRef Name="Id" />
@@ -555,8 +606,8 @@
           <Property Name="Status" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
           <NavigationProperty Name="AspNetUsers" Relationship="Model.FK_dboOrder_dbo_Order_IdSeller" FromRole="Order" ToRole="AspNetUsers" />
-          <NavigationProperty Name="Car" Relationship="Model.FK_dboOrder_dbo_Order_IdCar" FromRole="Order" ToRole="Car" />
           <NavigationProperty Name="Person" Relationship="Model.FK_dboOrder_dbo_Order_IdCustomer" FromRole="Order" ToRole="Person" />
+          <NavigationProperty Name="Car" Relationship="Model.FK_dboOrder_dbo_Order_IdCar" FromRole="Order" ToRole="Car" />
         </EntityType>
         <Association Name="FK_dboOrder_dbo_Order_IdSeller">
           <End Type="Model.AspNetUsers" Role="AspNetUsers" Multiplicity="1">
@@ -569,20 +620,6 @@
             </Principal>
             <Dependent Role="Order">
               <PropertyRef Name="IdSeller" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dboOrder_dbo_Order_IdCar">
-          <End Type="Model.Car" Role="Car" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="Model.Order" Role="Order" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Car">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Order">
-              <PropertyRef Name="IdCar" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -611,6 +648,55 @@
           <Property Name="IdCar" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Car" Relationship="Model.FK_dboAttribute_dbo_Attribute_IdCar" FromRole="Feature" ToRole="Car" />
         </EntityType>
+        <EntityType Name="Car">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Brand" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Model" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="VIN" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Color" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IdDealershipSalon" Type="Int32" Nullable="false" />
+          <Property Name="ImagePath" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="IdSold" Type="Boolean" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="HP" Type="Int32" Nullable="false" />
+          <Property Name="IdCarType" Type="Int32" Nullable="false" />
+          <Property Name="IdEngine" Type="Int32" Nullable="false" />
+          <Property Name="IdGearbox" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Feature" Relationship="Model.FK_dboAttribute_dbo_Attribute_IdCar" FromRole="Car" ToRole="Feature" />
+          <NavigationProperty Name="CarType" Relationship="Model.FK_dboCar_dbo_Car_IdCarType" FromRole="Car" ToRole="CarType" />
+          <NavigationProperty Name="DealershipSalon" Relationship="Model.FK_dboCar_dbo_Car_IdDealershipSalon" FromRole="Car" ToRole="DealershipSalon" />
+          <NavigationProperty Name="Engine" Relationship="Model.FK_dboCar_dbo_Car_IdEngine" FromRole="Car" ToRole="Engine" />
+          <NavigationProperty Name="Gearbox" Relationship="Model.FK_dboCar_dbo_Car_IdGearbox" FromRole="Car" ToRole="Gearbox" />
+          <NavigationProperty Name="Issue" Relationship="Model.FK_dboIssue_dbo_Issue_IdCar" FromRole="Car" ToRole="Issue" />
+          <NavigationProperty Name="Order" Relationship="Model.FK_dboOrder_dbo_Order_IdCar" FromRole="Car" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="CarType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Type" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Car" Relationship="Model.FK_dboCar_dbo_Car_IdCarType" FromRole="CarType" ToRole="Car" />
+        </EntityType>
+        <EntityType Name="Engine">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Type" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Car" Relationship="Model.FK_dboCar_dbo_Car_IdEngine" FromRole="Engine" ToRole="Car" />
+        </EntityType>
+        <EntityType Name="Gearbox">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Type" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Car" Relationship="Model.FK_dboCar_dbo_Car_IdGearbox" FromRole="Gearbox" ToRole="Car" />
+        </EntityType>
         <Association Name="FK_dboAttribute_dbo_Attribute_IdCar">
           <End Type="Model.Car" Role="Car" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -621,6 +707,80 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Feature">
+              <PropertyRef Name="IdCar" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dboCar_dbo_Car_IdCarType">
+          <End Type="Model.CarType" Role="CarType" Multiplicity="1" />
+          <End Type="Model.Car" Role="Car" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CarType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Car">
+              <PropertyRef Name="IdCarType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dboCar_dbo_Car_IdDealershipSalon">
+          <End Type="Model.DealershipSalon" Role="DealershipSalon" Multiplicity="1" />
+          <End Type="Model.Car" Role="Car" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DealershipSalon">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Car">
+              <PropertyRef Name="IdDealershipSalon" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dboCar_dbo_Car_IdEngine">
+          <End Type="Model.Engine" Role="Engine" Multiplicity="1" />
+          <End Type="Model.Car" Role="Car" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Engine">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Car">
+              <PropertyRef Name="IdEngine" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dboCar_dbo_Car_IdGearbox">
+          <End Type="Model.Gearbox" Role="Gearbox" Multiplicity="1" />
+          <End Type="Model.Car" Role="Car" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gearbox">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Car">
+              <PropertyRef Name="IdGearbox" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dboIssue_dbo_Issue_IdCar">
+          <End Type="Model.Car" Role="Car" Multiplicity="1" />
+          <End Type="Model.Issue" Role="Issue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Car">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Issue">
+              <PropertyRef Name="IdCar" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dboOrder_dbo_Order_IdCar">
+          <End Type="Model.Car" Role="Car" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Car">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Order">
               <PropertyRef Name="IdCar" />
             </Dependent>
           </ReferentialConstraint>
@@ -698,20 +858,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Car">
-            <EntityTypeMapping TypeName="Model.Car">
-              <MappingFragment StoreEntitySet="Car">
-                <ScalarProperty Name="IdSold" ColumnName="IdSold" />
-                <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
-                <ScalarProperty Name="IdDealershipSalon" ColumnName="IdDealershipSalon" />
-                <ScalarProperty Name="Color" ColumnName="Color" />
-                <ScalarProperty Name="VIN" ColumnName="VIN" />
-                <ScalarProperty Name="Model" ColumnName="Model" />
-                <ScalarProperty Name="Brand" ColumnName="Brand" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Order">
             <EntityTypeMapping TypeName="Model.Order">
               <MappingFragment StoreEntitySet="Order">
@@ -730,6 +876,49 @@
                 <ScalarProperty Name="IdCar" ColumnName="IdCar" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Car">
+            <EntityTypeMapping TypeName="Model.Car">
+              <MappingFragment StoreEntitySet="Car">
+                <ScalarProperty Name="IdGearbox" ColumnName="IdGearbox" />
+                <ScalarProperty Name="IdEngine" ColumnName="IdEngine" />
+                <ScalarProperty Name="IdCarType" ColumnName="IdCarType" />
+                <ScalarProperty Name="HP" ColumnName="HP" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="IdSold" ColumnName="IdSold" />
+                <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+                <ScalarProperty Name="IdDealershipSalon" ColumnName="IdDealershipSalon" />
+                <ScalarProperty Name="Color" ColumnName="Color" />
+                <ScalarProperty Name="VIN" ColumnName="VIN" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="Brand" ColumnName="Brand" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CarType">
+            <EntityTypeMapping TypeName="Model.CarType">
+              <MappingFragment StoreEntitySet="CarType">
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Engine">
+            <EntityTypeMapping TypeName="Model.Engine">
+              <MappingFragment StoreEntitySet="Engine">
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Gearbox">
+            <EntityTypeMapping TypeName="Model.Gearbox">
+              <MappingFragment StoreEntitySet="Gearbox">
                 <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>

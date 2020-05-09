@@ -16,15 +16,21 @@
         <AssociationConnector Association="Model.FK_dboIssue_dbo_Issue_IdServiceman" />
         <AssociationConnector Association="Model.FK_dboSeller_dbo_Seller_IdAspNetUser" />
         <AssociationConnector Association="Model.FK_dboSeller_dbo_Seller_IdDealershipSalon" />
-        <EntityTypeShape EntityType="Model.Car" Width="1.5" PointX="10" PointY="2.75" />
-        <AssociationConnector Association="Model.FK_dboCar_dbo_Car_IdDealershipSalon" />
-        <AssociationConnector Association="Model.FK_dboIssue_dbo_Issue_IdCar" />
         <EntityTypeShape EntityType="Model.Order" Width="1.5" PointX="12.25" PointY="6.25" />
         <AssociationConnector Association="Model.FK_dboOrder_dbo_Order_IdSeller" />
-        <AssociationConnector Association="Model.FK_dboOrder_dbo_Order_IdCar" />
         <AssociationConnector Association="Model.FK_dboOrder_dbo_Order_IdCustomer" />
         <EntityTypeShape EntityType="Model.Feature" Width="1.5" PointX="12.25" PointY="3.375" />
+        <EntityTypeShape EntityType="Model.Car" Width="1.5" PointX="10" PointY="1.125" />
+        <EntityTypeShape EntityType="Model.CarType" Width="1.5" PointX="7.75" PointY="0.875" />
+        <EntityTypeShape EntityType="Model.Engine" Width="1.5" PointX="7.75" PointY="14.25" />
+        <EntityTypeShape EntityType="Model.Gearbox" Width="1.5" PointX="7.75" PointY="16.625" />
         <AssociationConnector Association="Model.FK_dboAttribute_dbo_Attribute_IdCar" />
+        <AssociationConnector Association="Model.FK_dboCar_dbo_Car_IdCarType" />
+        <AssociationConnector Association="Model.FK_dboCar_dbo_Car_IdDealershipSalon" />
+        <AssociationConnector Association="Model.FK_dboCar_dbo_Car_IdEngine" />
+        <AssociationConnector Association="Model.FK_dboCar_dbo_Car_IdGearbox" />
+        <AssociationConnector Association="Model.FK_dboIssue_dbo_Issue_IdCar" />
+        <AssociationConnector Association="Model.FK_dboOrder_dbo_Order_IdCar" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
