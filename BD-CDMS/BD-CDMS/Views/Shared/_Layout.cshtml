@@ -19,9 +19,8 @@
                 </button>
                 @Html.ActionLink("Car System", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
-            <div class="navbar-collapse collapse">
+            <div class="navbar-collapse collapse" style="font-size:12px">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("Salon", "Index", "DealershipSalon")</li>
                     <li>@Html.ActionLink("People", "Index", "People")</li>
                     <li>@Html.ActionLink("Orders", "Index", "Orders")</li>
@@ -31,6 +30,7 @@
                     <li>@Html.ActionLink("History Issues", "IndexHistory", "Issues")</li>
                     <li>@Html.ActionLink("Admin Issues", "IndexAdmin", "Issues")</li>
                     <li>@Html.ActionLink("Add Issues", "Create", "Issues")</li>
+                    <li>@Html.ActionLink("Charts", "Index", "Charts")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
