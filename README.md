@@ -1,3 +1,4 @@
+
 # Car Dealerships Managment System
 
 ## How to:
@@ -34,6 +35,13 @@
 5. click `Ready` button to mark the issue as "done" when it's done
 6. go to Service history issues ([`https://localhost:44381/Issues/IndexHistory`](https://localhost:44381/Issue/IndexHistory)) tab to list the Done issues
 
+### [filter cars in the salon](https://github.com/paulinaurbas/BD-Car-Dealerships-Managment-System/issues/7)
+1. go to Log in ([`https://localhost:44381/Account/Login`](https://localhost:44381/Account/Login)) tab and login with seller credentials which are ```seller@gmail.com```:```ASDqwe`12```
+2. go to Salon ([`https://localhost:44381/DealershipSalon`](https://localhost:44381/DealershipSalon)) tab to list the available cars
+3. type for example `20000` in the `Max price` text field
+4. click `Search` button
+5. see the filtered cars in the salon
+
 ## Technology stack
 - .NET
 - VS2019
@@ -48,4 +56,3 @@
 - [Michał Szopa](https://github.com/SchopenXD)
 - [Paulina Urbaś](https://github.com/paulinaurbas)
 - [Paweł Zawierucha](https://github.com/PawZawDev)
-
