@@ -39,7 +39,7 @@ namespace BD_CDMS.Controllers
 
             ViewBag.chart = chart;
 
-            return View();
+            return View("Chart");
         }
     }
 }

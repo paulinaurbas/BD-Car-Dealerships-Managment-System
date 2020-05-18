@@ -16,23 +16,28 @@
 }
 
 
-@using (Html.BeginForm())
-{
+
+@*@using (Html.BeginForm())
+    {*@
 <p>
+    @Html.DropDownList("searchEngine", "Select Engine");
+    @Html.DropDownList("searchCarType", "Select CarType");
+    @Html.DropDownList("searchGearbox", "Select Gearbox");
     Find by salon name: @Html.TextBox("searchSalon")
     Find by color: @Html.TextBox("searchColor")
-    Find by brand: @Html.TextBox("SearchBrand")
-    Find by model: @Html.TextBox("SearchModel")
-    Find by gearbox: @Html.TextBox("SearchGearbox")
-    Find by engine: @Html.TextBox("SearchEngine")
-    Find by car type: @Html.TextBox("SearchCarType")
-    Min prise<input type="number" name="SearchMinPrice" step="0.01" />
-    Max prise <input type="number" name="SearchMaxPrice" step="0.01" />
-    <input type="submit" value="Search" />
+    Find by brand: @Html.TextBox("searchBrand")
+    Find by model: @Html.TextBox("searchModel")
+    @*Find by gearbox: @Html.TextBox("searchGearbox")
+    Find by engine: @Html.TextBox("searchEngine")
+    Find by car type: @Html.TextBox("searchCarType")*@
+    Min prise<input type="number" name="searchMinPrice" value="@ViewBag.searchMinPrice" step="0.01" id="searchMinPrice" />
+    Max prise <input type="number" name="searchMaxPrice" value="@ViewBag.searchMaxPrice" step="0.01" id="searchMaxPrice" />
+    @*<input type="submit" value="Search" />*@
 </p>
-}
+@*}*@
 
-<table class="table">
+
+<table class="table" id="resultsTable">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Brand)
@@ -101,3 +106,47 @@
     }
 
 </table>
+
+
+
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+    $(function () {
+        $("#searchSalon,#searchColor,#searchBrand,#searchModel,#searchGearbox,#searchEngine,#searchCarType,#searchMinPrice,#searchMaxPrice").keyup(function (e) {
+            var ss = $("#searchSalon").val();
+            var sc = $("#searchColor").val();
+            var sb = $("#searchBrand").val();
+            var sm = $("#searchModel").val();
+            var sg = $("#searchGearbox").val();
+            var se = $("#searchEngine").val();
+            var sct = $("#searchCarType").val();
+            var sp1 = $("#searchMinPrice").val();
+            var sp2 = $("#searchMaxPrice").val();
+
+            $.get("/DealershipSalon/Index?searchSalon=" + ss + "&searchColor=" + sc + "&searchBrand=" + sb + "&searchModel=" + sm + "&searchGearbox=" + sg +
+                "&searchEngine=" + se + "&searchCarType=" + sct + "&searchMinPrice=" + sp1 + "&searchMaxPrice=" + sp2, function (data) {
+                    $("#resultsTable").html(data);
+                });
+        });
+
+        $("#searchGearbox,#searchEngine,#searchCarType").change(function (e) {
+            var ss = $("#searchSalon").val();
+            var sc = $("#searchColor").val();
+            var sb = $("#searchBrand").val();
+            var sm = $("#searchModel").val();
+            var sg = $("#searchGearbox").val();
+            var se = $("#searchEngine").val();
+            var sct = $("#searchCarType").val();
+            var sp1 = $("#searchMinPrice").val();
+            var sp2 = $("#searchMaxPrice").val();
+
+            $.get("/DealershipSalon/Index?searchSalon=" + ss + "&searchColor=" + sc + "&searchBrand=" + sb + "&searchModel=" + sm + "&searchGearbox=" + sg +
+                "&searchEngine=" + se + "&searchCarType=" + sct + "&searchMinPrice=" + sp1 + "&searchMaxPrice=" + sp2, function (data) {
+                    $("#resultsTable").html(data);
+                });
+        });
+    });
+
+
+</script>

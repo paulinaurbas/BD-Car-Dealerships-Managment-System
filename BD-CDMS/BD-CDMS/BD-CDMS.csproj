@@ -344,7 +344,8 @@
     <Content Include="Views\DealershipSalon\Edit.cshtml" />
     <Content Include="Views\DealershipSalon\Index.cshtml" />
     <Content Include="Views\Charts\Index.cshtml" />
-    <Content Include="Views\Charts\SellsPerDate.cshtml" />
+    <Content Include="Views\Charts\Chart.cshtml" />
+    <Content Include="Views\DealershipSalon\SearchCarList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

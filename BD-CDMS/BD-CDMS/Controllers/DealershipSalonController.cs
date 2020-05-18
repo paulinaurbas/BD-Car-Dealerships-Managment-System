@@ -16,11 +16,18 @@ namespace BD_CDMS.Controllers
 
         [Authorize(Roles = "Admin,Seller,Serviceman")]
         // GET: DealershipSalon
-        public ActionResult Index(string searchSalon, string searchColor, string SearchBrand, string SearchModel, string SearchGearbox, string SearchEngine, string SearchCarType,
-            decimal? SearchMinPrice, decimal? SearchMaxPrice)
+        public ActionResult Index(string searchSalon, string searchColor, string searchBrand, string searchModel, int? searchGearbox, int? searchEngine, int? searchCarType,
+            decimal? searchMinPrice, decimal? searchMaxPrice)
         {
             //var car = db.Car.Include(c => c.CarType).Include(c => c.DealershipSalon).Include(c => c.Engine).Include(c => c.Gearbox);
             //return View(car.ToList());
+
+            ViewBag.searchMinPrice = searchMinPrice;
+            ViewBag.searchMaxPrice = searchMaxPrice;
+
+            ViewBag.searchCarType = new SelectList(db.CarType, "Id", "Type");
+            ViewBag.searchEngine = new SelectList(db.Engine, "Id", "Type");
+            ViewBag.searchGearbox = new SelectList(db.Gearbox, "Id", "Type");
 
             if (searchSalon != null)
             {
@@ -28,20 +35,33 @@ namespace BD_CDMS.Controllers
                     Where(c => c.IdSold == false).
                     Where(d => d.DealershipSalon.Name.Contains(searchSalon)).
                     Where(d => d.Color.Contains(searchColor)).
-                    Where(d => d.Brand.Contains(SearchBrand)).
-                    Where(d => d.Model.Contains(SearchModel)).
-                    Where(d => d.Brand.Contains(SearchGearbox)).
-                    Where(d => d.Brand.Contains(SearchEngine)).
-                    Where(d => d.Brand.Contains(SearchCarType));
+                    Where(d => d.Brand.Contains(searchBrand)).
+                    Where(d => d.Model.Contains(searchModel));
 
-                if (SearchMinPrice != null)
+                if (searchGearbox != null)
                 {
-                    car = car.Where(d => d.Price >= SearchMinPrice);
+                    car = car.Where(d => d.Gearbox.Id == searchGearbox);
                 }
-                if (SearchMaxPrice != null)
+                if (searchEngine != null)
                 {
-                    car = car.Where(d => d.Price <= SearchMaxPrice);
+                    car = car.Where(d => d.Engine.Id == searchEngine);
                 }
+                if (searchCarType != null)
+                {
+                    car = car.Where(d => d.CarType.Id == searchCarType);
+                }
+
+                if (searchMinPrice != null)
+                {
+                    car = car.Where(d => d.Price >= searchMinPrice);
+                }
+                if (searchMaxPrice != null)
+                {
+                    car = car.Where(d => d.Price <= searchMaxPrice);
+                }
+
+                if (Request.IsAjaxRequest())
+                    return PartialView("SearchCarList", car.ToList());
 
                 return View(car.ToList());
             }
