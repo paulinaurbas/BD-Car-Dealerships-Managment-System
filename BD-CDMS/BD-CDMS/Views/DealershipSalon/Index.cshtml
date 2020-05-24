@@ -1,41 +1,44 @@
 ﻿@model IEnumerable<BD_CDMS.Models.Car>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Offers";
 }
 
-<h2>Index</h2>
+<h2 class="title">Offers</h2>
 
 @{
     if (System.Web.HttpContext.Current.User.IsInRole("Admin") || System.Web.HttpContext.Current.User.IsInRole("Manager"))
     {
         <p>
-            @Html.ActionLink("Create New", "Create")
-            @Html.ActionLink("Add cars", "AddCarList")
+            @Html.ActionLink("Add New Car", "Create", null, new { @class = "btn btn-success" })
+            @Html.ActionLink("Add List of Cars", "AddCarList", null, new { @class = "btn btn-success" })
         </p>
     }
 }
 
 
-
-@*@using (Html.BeginForm())
-    {*@
 <p>
-    @Html.DropDownList("searchEngine", "Select Engine");
-    @Html.DropDownList("searchCarType", "Select CarType");
-    @Html.DropDownList("searchGearbox", "Select Gearbox");
-    Find by salon name: @Html.TextBox("searchSalon")
-    Find by color: @Html.TextBox("searchColor")
-    Find by brand: @Html.TextBox("searchBrand")
-    Find by model: @Html.TextBox("searchModel")
-    @*Find by gearbox: @Html.TextBox("searchGearbox")
-    Find by engine: @Html.TextBox("searchEngine")
-    Find by car type: @Html.TextBox("searchCarType")*@
-    Min prise<input type="number" name="searchMinPrice" value="@ViewBag.searchMinPrice" step="0.01" id="searchMinPrice" />
-    Max prise <input type="number" name="searchMaxPrice" value="@ViewBag.searchMaxPrice" step="0.01" id="searchMaxPrice" />
-    @*<input type="submit" value="Search" />*@
+    <div>
+        @Html.DropDownList("searchEngine", "Select Engine")&emsp; &emsp; &emsp;
+        @Html.DropDownList("searchCarType", "Select CarType")&emsp; &emsp; &emsp;
+        @Html.DropDownList("searchGearbox", "Select Gearbox")&emsp; &emsp; &emsp;
+
+    </div>
+    <br />
+    <div>
+        Find by salon name: &emsp; @Html.TextBox("searchSalon") &emsp; &emsp; &emsp;
+        Min prise: <input type="number" name="searchMinPrice" value="@ViewBag.searchMinPrice" step="0.01" id="searchMinPrice" /> &emsp; &emsp;
+        Max prise: <input type="number" name="searchMaxPrice" value="@ViewBag.searchMaxPrice" step="0.01" id="searchMaxPrice" /> &emsp; &emsp;
+    </div>
+    <br />
+    <div>
+        Find by color: &emsp; &emsp; &emsp; @Html.TextBox("searchColor") &emsp; &emsp;
+        Find by brand: @Html.TextBox("searchBrand")&emsp; &emsp;
+        Find by model: @Html.TextBox("searchModel")&emsp; &emsp;
+    </div>
+
 </p>
-@*}*@
+
 
 
 <table class="table" id="resultsTable">
@@ -46,9 +49,9 @@
         <th>
             @Html.DisplayNameFor(model => model.Model)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.VIN)
-        </th>
+        @*<th>
+                @Html.DisplayNameFor(model => model.VIN)
+            </th>*@
         <th>
             @Html.DisplayNameFor(model => model.Color)
         </th>
@@ -70,9 +73,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Model)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.VIN)
-            </td>
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.VIN)
+                </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.Color)
             </td>
@@ -86,31 +89,33 @@
                 @{
                     if (System.Web.HttpContext.Current.User.IsInRole("Admin"))
                     {
-                        <li>@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |</li>
-                        <li>@Html.ActionLink("Details", "Details", new { id = item.Id }) |</li>
-                        <li>@Html.ActionLink("Delete", "Delete", new { id = item.Id }) |</li>
-                        <li>@Html.ActionLink("Create Order", "Create", "Orders") |</li>
-                        <li>@Html.ActionLink("Create Person", "CreateOrder", "People")</li>
-                        @Html.ActionLink("Features", "IndexCar", "Features", new { id = item.Id }, new { @class = "btn btn-success" })
+                        @Html.ActionLink("Create Order", "Create", "Orders", null, new { @class = "btn btn-outline-success btn-sm" })
+                        @Html.ActionLink("Create Person", "CreateOrder", "People", null, new { @class = "btn btn-outline-success btn-sm" })
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-outline-warning btn-sm" })
+                        @Html.ActionLink("Features", "IndexCar", "Features", new { id = item.Id }, new { @class = "btn btn-outline-primary btn-sm" })
+                        @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-outline-info btn-sm" })
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-outline-danger btn-sm" })
+
                     }
 
                     if (System.Web.HttpContext.Current.User.IsInRole("Manager"))
                     {
-                        <li>@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |</li>
-                        <li>@Html.ActionLink("Details", "Details", new { id = item.Id }) |</li>
-                        <li>@Html.ActionLink("Delete", "Delete", new { id = item.Id }) |</li>
-                        @Html.ActionLink("Features", "IndexCar", "Features", new { id = item.Id }, new { @class = "btn btn-success" })
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-outline-warning btn-sm" })
+                        @Html.ActionLink("Features", "IndexCar", "Features", new { id = item.Id }, new { @class = "btn btn-outline-primary btn-sm" })
+                        @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-outline-info btn-sm" })
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-outline-danger btn-sm" })
                     }
                     if (System.Web.HttpContext.Current.User.IsInRole("Seller"))
                     {
-                        <li>@Html.ActionLink("Create Order", "Create", "Orders") |</li>
-                        <li>@Html.ActionLink("Create Person", "CreateOrder", "People")</li>
-                        @Html.ActionLink("Features", "IndexCar", "Features", new { id = item.Id }, new { @class = "btn btn-success" })
+                        @Html.ActionLink("Create Order", "Create", "Orders", null, new { @class = "btn btn-outline-success btn-sm" })
+                        @Html.ActionLink("Create Person", "CreateOrder", "People", null, new { @class = "btn btn-outline-success btn-sm" })
+                        @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-outline-info btn-sm" })
+                        @Html.ActionLink("Features", "IndexCar", "Features", new { id = item.Id }, new { @class = "btn btn-outline-primary btn-sm" })
                     }
 
                     if (System.Web.HttpContext.Current.User.IsInRole("Serviceman"))
                     {
-                        @Html.ActionLink("Features", "IndexCar", "Features", new { id = item.Id }, new { @class = "btn btn-success" })
+                        @Html.ActionLink("Features", "IndexCar", "Features", new { id = item.Id }, new { @class = "btn btn-outline-primary btn-sm" })
                     }
                 }
             </td>

@@ -3,120 +3,109 @@
 @{
     ViewBag.Title = "Details";
 }
-
-<h2>Details</h2>
+<br />
+<h2 class="title">@Html.DisplayFor(model => model.Brand)  @Html.DisplayFor(model => model.Model)</h2>
 
 <div>
-    <h4>Car</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Brand)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Brand)
-        </dd>
+    <ul class="list-inline rent-offer">
+        <li class="offer-item ">
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Brand)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Model)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Brand)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Model)
-        </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Model)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.VIN)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Model)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.VIN)
-        </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.VIN)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Color)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.VIN)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Color)
-        </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Color)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ImagePath)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Color)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.ImagePath)
-        </dd>
+                @*<dt>
+                        @Html.DisplayNameFor(model => model.ImagePath)
+                    </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.IdSold)
-        </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.ImagePath)
+                    </dd>*@
 
-        <dd>
-            @Html.DisplayFor(model => model.IdSold)
-        </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Price)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Price) PLN
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Price)
-        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.HP)
-        </dt>
+                <dt>
+                    Car Type
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.HP)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.CarType.Type)
+                </dd>
 
-        <dt>
-            CarType
-        </dt>
+                <dt>
+                    Engine
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.CarType.Type)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.Engine.Type)  @Html.DisplayFor(model => model.HP) HP
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.DealershipSalon.PhoneNumber)
-        </dt>
+                <dt>
+                    Gearbox
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.DealershipSalon.PhoneNumber)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.Gearbox.Type)
+                </dd>
 
-        <dt>
-            Engine
-        </dt>
+                <dt>
+                    Salon
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Engine.Type)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.DealershipSalon.Name)  @Html.DisplayFor(model => model.DealershipSalon.Address)  @Html.DisplayFor(model => model.DealershipSalon.PhoneNumber)
+                </dd>
 
-        <dt>
-            Gearbox
-        </dt>
+            </dl>
 
-        <dd>
-            @Html.DisplayFor(model => model.Gearbox.Type)
-        </dd>
+        @{
+        @Html.ActionLink("Back to List", "Index",null,  new { @class = "btn btn-outline-dark btn-sm" })
 
-    </dl>
-</div>
-<p>
-
-    @{
-
-        if (System.Web.HttpContext.Current.User.IsInRole("Admin") || System.Web.HttpContext.Current.User.IsInRole("Manager"))
-        {
-            @Html.ActionLink("Edit", "Edit", new { id = Model.Id })
+            if (System.Web.HttpContext.Current.User.IsInRole("Admin") || System.Web.HttpContext.Current.User.IsInRole("Manager"))
+            {
+                @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-outline-danger btn-sm" })
+            }
         }
-    }
-    |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+        </li>
+        @*<li class="offer-item offer-image" style="background-image: url('../../images/@Html.DisplayFor(model => model.ImagePath)');" />*@
+        <li class="offer-item offer-image" style="background-image: url('../../Images/McLaren1.png');" />
+    </ul>
+    <p>
+    </p>
+</div>
