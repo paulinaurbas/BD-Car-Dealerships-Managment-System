@@ -16,7 +16,7 @@ namespace BD_CDMS.Controllers
         private Entities db = new Entities();
 
         // GET: Issues
-        [Authorize(Roles = "Admin,Serviceman")]
+        [Authorize(Roles = "Admin,Serviceman,Manager")]
         public ActionResult Index()
         {
             var issue = db.Issue.Include(i => i.AspNetUsers).Include(i => i.Car).Where(t => t.IdServiceman == null);
@@ -24,7 +24,7 @@ namespace BD_CDMS.Controllers
         }
 
         // GET: Issues/Details/5
-        [Authorize(Roles = "Admin,Serviceman")]
+        [Authorize(Roles = "Admin,Serviceman,Manager")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -40,7 +40,7 @@ namespace BD_CDMS.Controllers
         }
 
         // GET: Issues/Create
-        [Authorize(Roles = "Admin,Serviceman,Seller")]
+        [Authorize(Roles = "Admin,Serviceman,Seller,Manager")]
         public ActionResult Create()
         {
             var cars = db.Car.Select(n => new
@@ -186,7 +186,7 @@ namespace BD_CDMS.Controllers
         }
 
         // GET: Issues
-        [Authorize(Roles = "Admin,Serviceman")]
+        [Authorize(Roles = "Admin")]
         public ActionResult IndexAdmin()
         {
             var issue = db.Issue.Include(i => i.AspNetUsers).Include(i => i.Car);

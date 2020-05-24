@@ -17,10 +17,10 @@ namespace BD_CDMS.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public AspNetUsers()
         {
-            this.AspNetUserRoles = new HashSet<AspNetUserRoles>();
             this.Issue = new HashSet<Issue>();
             this.Seller = new HashSet<Seller>();
             this.Order = new HashSet<Order>();
+            this.AspNetRoles = new HashSet<AspNetRoles>();
         }
     
         public string Id { get; set; }
@@ -37,8 +37,6 @@ namespace BD_CDMS.Models
         public string UserName { get; set; }
         public Nullable<int> IdDealershipSalon { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AspNetUserRoles> AspNetUserRoles { get; set; }
         public virtual DealershipSalon DealershipSalon { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Issue> Issue { get; set; }
@@ -46,5 +44,7 @@ namespace BD_CDMS.Models
         public virtual ICollection<Seller> Seller { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Order> Order { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AspNetRoles> AspNetRoles { get; set; }
     }
 }

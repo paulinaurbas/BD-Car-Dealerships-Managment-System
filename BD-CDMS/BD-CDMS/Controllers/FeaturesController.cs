@@ -14,7 +14,7 @@ namespace BD_CDMS.Controllers
     {
         private Entities db = new Entities();
 
-        [Authorize(Roles = "Admin,Seller,Serviceman")]
+        [Authorize(Roles = "Admin,Seller,Serviceman,Manager")]
         // GET: Features
         public ActionResult Index()
         {
@@ -23,7 +23,7 @@ namespace BD_CDMS.Controllers
             return View(feature.ToList());
         }
 
-        [Authorize(Roles = "Admin,Seller,Serviceman")]
+        [Authorize(Roles = "Admin,Seller,Serviceman,Manager")]
         // GET: Features/Details/5
         public ActionResult Details(int? id)
         {
@@ -154,7 +154,7 @@ namespace BD_CDMS.Controllers
             base.Dispose(disposing);
         }
 
-        [Authorize(Roles = "Admin,Seller,Serviceman")]
+        [Authorize(Roles = "Admin,Seller,Serviceman,Manager")]
         public ActionResult IndexCar(int? id)
         {
 

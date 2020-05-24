@@ -11,7 +11,7 @@ using Microsoft.AspNet.Identity;
 
 namespace BD_CDMS.Controllers
 {
-    [Authorize(Roles = "Admin,Seller")]
+    [Authorize(Roles = "Admin,Seller,Manager")]
     public class OrdersController : Controller
     {
         private Entities _db = new Entities();
@@ -24,6 +24,7 @@ namespace BD_CDMS.Controllers
             return View(order.ToList());
         }
 
+        [Authorize(Roles = "Admin,Seller,Manager")]
         // GET: Orders/Details/5
         public ActionResult Details(int? id)
         {
@@ -42,6 +43,7 @@ namespace BD_CDMS.Controllers
             return View(order);
         }
 
+        [Authorize(Roles = "Admin,Seller")]
         // GET: Orders/Create
         public ActionResult Create()
         {
@@ -102,6 +104,7 @@ namespace BD_CDMS.Controllers
             return View(order);
         }
 
+        [Authorize(Roles = "Admin,Seller")]
         // GET: Orders/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -161,6 +164,7 @@ namespace BD_CDMS.Controllers
             return View(order);
         }
 
+        [Authorize(Roles = "Admin,Seller")]
         // GET: Orders/Delete/5
         public ActionResult Delete(int? id)
         {

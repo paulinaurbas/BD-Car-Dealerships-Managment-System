@@ -11,6 +11,7 @@
     {
         <p>
             @Html.ActionLink("Create New", "Create")
+            @Html.ActionLink("Add cars", "AddCarList")
         </p>
     }
 }
@@ -98,7 +99,7 @@
 
                     if (System.Web.HttpContext.Current.User.IsInRole("Serviceman"))
                     {
-                        @Html.ActionLink("Add feature", "IndexCar", "Features", new { id = item.Id }, new { @class = "btn btn-success" })
+                        @Html.ActionLink("Features", "IndexCar", "Features", new { id = item.Id }, new { @class = "btn btn-success" })
                     }
                 }
             </td>

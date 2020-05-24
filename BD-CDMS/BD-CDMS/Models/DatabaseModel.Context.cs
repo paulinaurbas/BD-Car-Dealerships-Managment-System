@@ -25,7 +25,6 @@ namespace BD_CDMS.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<AspNetUserRoles> AspNetUserRoles { get; set; }
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
         public virtual DbSet<DealershipSalon> DealershipSalon { get; set; }
         public virtual DbSet<Issue> Issue { get; set; }
@@ -37,5 +36,6 @@ namespace BD_CDMS.Models
         public virtual DbSet<CarType> CarType { get; set; }
         public virtual DbSet<Engine> Engine { get; set; }
         public virtual DbSet<Gearbox> Gearbox { get; set; }
+        public virtual DbSet<AspNetRoles> AspNetRoles { get; set; }
     }
 }

@@ -1,0 +1,1 @@
+fiat,multipla,234234,czerwony,1, ,false,1234,1000,1,1,1

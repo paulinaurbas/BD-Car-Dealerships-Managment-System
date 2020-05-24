@@ -1,0 +1,71 @@
+﻿@model IEnumerable<BD_CDMS.Models.Car>
+
+@{
+    ViewBag.Title = "AddCarList";
+}
+
+<h2>Add cars</h2>
+
+
+<style type="text/css">
+    #dropSection {
+        background: gray;
+        border: black dashed 3px;
+        width: 200px;
+        padding: 50px;
+        text-align: center;
+        color: white;
+    }
+
+    #btnUpload {
+        display: none;
+    }
+
+    .active {
+        background-color: yellow !important;
+    }
+</style>
+
+<div id="dropSection">
+</div>
+<br />
+    Uploaded Files:
+<hr />
+<div id="uploadedFiles">
+</div>
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+<script type="text/javascript" src='https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.3.min.js'></script>
+<script src="~/Scripts/jquery.filedrop.js"></script>
+<script type="text/javascript">
+        $(function () {
+            $("#dropSection").filedrop({
+                fallback_id: 'btnUpload',
+                fallback_dropzoneClick: true,
+                url: '@Url.Action("AddCarList")',
+                //allowedfiletypes: ['image/jpeg', 'image/png', 'image/gif', 'application/pdf', 'application/doc'],
+                //allowedfileextensions: ['.doc', '.docx', '.pdf', '.jpg', '.jpeg', '.png', '.gif'],
+                paramname: 'fileData',
+                maxfiles: 5, //Maximum Number of Files allowed at a time.
+                maxfilesize: 2, //Maximum File Size in MB.
+                dragOver: function () {
+                    $('#dropSection').addClass('active');
+                },
+                dragLeave: function () {
+                    $('#dropSection').removeClass('active');
+                },
+                drop: function () {
+                    $('#dropSection').removeClass('active');
+                },
+                uploadFinished: function (i, file, response, time) {
+                    $('#uploadedFiles').append(file.name + '<br />')
+                },
+                afterAll: function (e) {
+                    //To do some task after all uploads done.
+                }
+            })
+        })
+</script>

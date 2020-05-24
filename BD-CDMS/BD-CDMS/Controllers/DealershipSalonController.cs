@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -14,7 +15,7 @@ namespace BD_CDMS.Controllers
     {
         private Entities db = new Entities();
 
-        [Authorize(Roles = "Admin,Seller,Serviceman")]
+        [Authorize(Roles = "Admin,Seller,Serviceman,Manager")]
         // GET: DealershipSalon
         public ActionResult Index(string searchSalon, string searchColor, string searchBrand, string searchModel, int? searchGearbox, int? searchEngine, int? searchCarType,
             decimal? searchMinPrice, decimal? searchMaxPrice)
@@ -73,7 +74,7 @@ namespace BD_CDMS.Controllers
             }
         }
 
-        [Authorize(Roles = "Admin,Seller,Serviceman")]
+        [Authorize(Roles = "Admin,Seller,Serviceman,Manager")]
         // GET: DealershipSalon/Details/5
         public ActionResult Details(int? id)
         {
@@ -89,7 +90,7 @@ namespace BD_CDMS.Controllers
             return View(car);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Manager")]
         // GET: DealershipSalon/Create
         public ActionResult Create()
         {
@@ -137,7 +138,7 @@ namespace BD_CDMS.Controllers
             return View(car);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Manager")]
         // GET: DealershipSalon/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -193,7 +194,7 @@ namespace BD_CDMS.Controllers
             return View(car);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Manager")]
         // GET: DealershipSalon/Delete/5
         public ActionResult Delete(int? id)
         {
@@ -209,7 +210,7 @@ namespace BD_CDMS.Controllers
             return View(car);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Manager")]
         // POST: DealershipSalon/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -228,6 +229,69 @@ namespace BD_CDMS.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+
+
+
+
+
+
+
+        [Authorize(Roles = "Admin,Manager")]
+        // GET: Home
+        public ActionResult AddCarList()
+        {
+            return View();
+        }
+
+        [Authorize(Roles = "Admin,Manager")]
+        [HttpPost]
+        public ActionResult AddCarList(List<HttpPostedFileBase> fileData)
+        {
+            string path = Server.MapPath("~/Uploads/");
+            foreach (HttpPostedFileBase postedFile in fileData)
+            {
+                if (postedFile != null)
+                {
+                    string fileName = Path.GetFileName(postedFile.FileName);
+                    postedFile.SaveAs(path + fileName);
+
+                    using (var reader = new StreamReader(path + fileName))
+                    {
+                        while (!reader.EndOfStream)
+                        {
+                            var line = reader.ReadLine();
+                            var values = line.Split(new[] { ';', ',' });
+
+                            Car car = new Car();
+
+                            car.Brand = values[0];
+                            car.Model = values[1];
+                            car.VIN = values[2];
+                            car.Color = values[3];
+                            car.IdDealershipSalon = int.Parse(values[4]);
+                            if (values[5].Trim().Length != 0)
+                            {
+                                car.ImagePath = values[5];
+                            }
+                            car.IdSold = bool.Parse(values[6]);
+                            car.Price = int.Parse(values[7]);
+                            car.HP = int.Parse(values[8]);
+                            car.IdCarType = int.Parse(values[9]);
+                            car.IdEngine = int.Parse(values[10]);
+                            car.IdGearbox = int.Parse(values[11]);
+
+                            db.Car.Add(car);
+                        }
+                        db.SaveChanges();
+
+                        return View();
+                    }
+                }
+            }
+
+            return Content("Success");
         }
     }
 }

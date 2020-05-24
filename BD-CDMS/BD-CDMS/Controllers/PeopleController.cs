@@ -10,7 +10,7 @@ using BD_CDMS.Models;
 
 namespace BD_CDMS.Controllers
 {
-    [Authorize(Roles = "Admin,Seller")]
+    [Authorize(Roles = "Admin,Seller,Manager")]
     public class PeopleController : Controller
     {
         private Entities _db = new Entities();
@@ -21,6 +21,7 @@ namespace BD_CDMS.Controllers
             return View(_db.Person.ToList());
         }
 
+        [Authorize(Roles = "Admin,Seller,Manager")]
         // GET: People/Details/5
         public ActionResult Details(int? id)
         {
@@ -39,6 +40,7 @@ namespace BD_CDMS.Controllers
             return View(person);
         }
 
+        [Authorize(Roles = "Admin,Seller")]
         // GET: People/Create
         public ActionResult Create()
         {
@@ -62,6 +64,7 @@ namespace BD_CDMS.Controllers
             return View(person);
         }
 
+        [Authorize(Roles = "Admin,Seller")]
         // GET: People/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -98,6 +101,7 @@ namespace BD_CDMS.Controllers
             return View(person);
         }
 
+        [Authorize(Roles = "Admin,Seller")]
         // GET: People/Delete/5
         public ActionResult Delete(int? id)
         {
@@ -141,7 +145,7 @@ namespace BD_CDMS.Controllers
 
 
 
-
+        [Authorize(Roles = "Admin,Seller")]
         public ActionResult CreateOrder()
         {
             return View();
