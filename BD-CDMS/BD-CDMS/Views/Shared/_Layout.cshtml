@@ -21,32 +21,50 @@
             </div>
             <div class="navbar-collapse collapse" style="font-size:12px">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Salon", "Index", "DealershipSalon")</li>
-                    <li>@Html.ActionLink("People", "Index", "People")</li>
-                    <li>@Html.ActionLink("Orders", "Index", "Orders")</li>
-                    <li>@Html.ActionLink("Feature", "Index", "Features")</li>
-                    <li>@Html.ActionLink("Issues", "Index", "Issues")</li>
-                    <li>@Html.ActionLink("Inprogress", "IndexServiceman", "Issues")</li>
-                    <li>@Html.ActionLink("History Issues", "IndexHistory", "Issues")</li>
-                    <li>@Html.ActionLink("Admin Issues", "IndexAdmin", "Issues")</li>
-                    <li>@Html.ActionLink("Add Issues", "Create", "Issues")</li>
-                    <li>@Html.ActionLink("Charts", "Index", "Charts")</li>
+
                     @{
                         if (System.Web.HttpContext.Current.User.IsInRole("Admin"))
                         {
-                            <li>@Html.ActionLink("AspNetUsers", "Index", "AspNetUsers")</li>
+                            <li>@Html.ActionLink("Salon", "Index", "DealershipSalon")</li>
+                            <li>@Html.ActionLink("People", "Index", "People")</li>
+                            <li>@Html.ActionLink("Orders", "Index", "Orders")</li>
+                            <li>@Html.ActionLink("Feature", "Index", "Features")</li>
+                            <li>@Html.ActionLink("Issues", "Index", "Issues")</li>
+                            <li>@Html.ActionLink("Inprogress", "IndexServiceman", "Issues")</li>
+                            <li>@Html.ActionLink("History Issues", "IndexHistory", "Issues")</li>
+                            <li>@Html.ActionLink("Admin Issues", "IndexAdmin", "Issues")</li>
+                            <li>@Html.ActionLink("Add Issues", "Create", "Issues")</li>
+                            <li>@Html.ActionLink("Charts", "Index", "Charts")</li>
+
                         }
                         if (System.Web.HttpContext.Current.User.IsInRole("Seller"))
                         {
-                            <li>@Html.ActionLink("AspNetUsers", "Index", "AspNetUsers")</li>
+                            <li>@Html.ActionLink("Salon", "Index", "DealershipSalon")</li>
+                            <li>@Html.ActionLink("People", "Index", "People")</li>
+                            <li>@Html.ActionLink("Orders", "Index", "Orders")</li>
+                            <li>@Html.ActionLink("Feature", "Index", "Features")</li>
+                            <li>@Html.ActionLink("Add Issues", "Create", "Issues")</li>
+
                         }
                         if (System.Web.HttpContext.Current.User.IsInRole("Serviceman"))
                         {
-                            <li>@Html.ActionLink("AspNetUsers", "Index", "AspNetUsers")</li>
+                            <li>@Html.ActionLink("Salon", "Index", "DealershipSalon")</li>
+                            <li>@Html.ActionLink("Feature", "Index", "Features")</li>
+                            <li>@Html.ActionLink("Issues", "Index", "Issues")</li>
+                            <li>@Html.ActionLink("Inprogress", "IndexServiceman", "Issues")</li>
+                            <li>@Html.ActionLink("History Issues", "IndexHistory", "Issues")</li>
+                            <li>@Html.ActionLink("Add Issues", "Create", "Issues")</li>
                         }
                         if (System.Web.HttpContext.Current.User.IsInRole("Manager"))
                         {
-                            <li>@Html.ActionLink("AspNetUsers", "Index", "AspNetUsers")</li>
+                            <li>@Html.ActionLink("Salon", "Index", "DealershipSalon")</li>
+                            <li>@Html.ActionLink("People", "Index", "People")</li>
+                            <li>@Html.ActionLink("Orders", "Index", "Orders")</li>
+                            <li>@Html.ActionLink("Feature", "Index", "Features")</li>
+                            <li>@Html.ActionLink("Issues", "Index", "Issues")</li>
+                            <li>@Html.ActionLink("History Issues", "IndexHistory", "Issues")</li>
+                            <li>@Html.ActionLink("Add Issues", "Create", "Issues")</li>
+                            <li>@Html.ActionLink("Charts", "Index", "Charts")</li>
                         }
                     }
                 </ul>

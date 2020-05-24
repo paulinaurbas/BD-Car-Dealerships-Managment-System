@@ -7,7 +7,7 @@
 <h2>Index</h2>
 
 @{
-    if (System.Web.HttpContext.Current.User.IsInRole("Admin"))
+    if (System.Web.HttpContext.Current.User.IsInRole("Admin") || System.Web.HttpContext.Current.User.IsInRole("Manager"))
     {
         <p>
             @Html.ActionLink("Create New", "Create")
@@ -89,12 +89,23 @@
                         <li>@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |</li>
                         <li>@Html.ActionLink("Details", "Details", new { id = item.Id }) |</li>
                         <li>@Html.ActionLink("Delete", "Delete", new { id = item.Id }) |</li>
+                        <li>@Html.ActionLink("Create Order", "Create", "Orders") |</li>
+                        <li>@Html.ActionLink("Create Person", "CreateOrder", "People")</li>
+                        @Html.ActionLink("Features", "IndexCar", "Features", new { id = item.Id }, new { @class = "btn btn-success" })
                     }
 
+                    if (System.Web.HttpContext.Current.User.IsInRole("Manager"))
+                    {
+                        <li>@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |</li>
+                        <li>@Html.ActionLink("Details", "Details", new { id = item.Id }) |</li>
+                        <li>@Html.ActionLink("Delete", "Delete", new { id = item.Id }) |</li>
+                        @Html.ActionLink("Features", "IndexCar", "Features", new { id = item.Id }, new { @class = "btn btn-success" })
+                    }
                     if (System.Web.HttpContext.Current.User.IsInRole("Seller"))
                     {
                         <li>@Html.ActionLink("Create Order", "Create", "Orders") |</li>
                         <li>@Html.ActionLink("Create Person", "CreateOrder", "People")</li>
+                        @Html.ActionLink("Features", "IndexCar", "Features", new { id = item.Id }, new { @class = "btn btn-success" })
                     }
 
                     if (System.Web.HttpContext.Current.User.IsInRole("Serviceman"))
