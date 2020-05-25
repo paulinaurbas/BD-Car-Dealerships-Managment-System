@@ -49,10 +49,10 @@
         if (System.Web.HttpContext.Current.User.IsInRole("Admin") || System.Web.HttpContext.Current.User.IsInRole("Serviceman"))
         {
 
-            @Html.ActionLink("Edit", "Edit", new { id = Model.Id });
+            @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-outline-danger btn-sm" });
 
         }
     }
 
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to List", "Index",null, new { @class = "btn btn-outline-dark btn-sm" })
 </p>
