@@ -4,13 +4,13 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Orders</h2>
 
 @{
     if (System.Web.HttpContext.Current.User.IsInRole("Admin") || System.Web.HttpContext.Current.User.IsInRole("Seller") )
     {
         <p>
-            @Html.ActionLink("Create New", "Create")
+            @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-success" })
         </p>
     }
 }
@@ -57,11 +57,11 @@
             if (System.Web.HttpContext.Current.User.IsInRole("Admin") || System.Web.HttpContext.Current.User.IsInRole("Seller"))
             {
 
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id })
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-outline-success btn-sm" })
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-outline-success btn-sm" })
             }
         }
-        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+        @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-outline-success btn-sm" })
 
     </td>
 </tr>
