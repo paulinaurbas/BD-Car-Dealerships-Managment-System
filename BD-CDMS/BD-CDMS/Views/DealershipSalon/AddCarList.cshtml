@@ -4,15 +4,15 @@
     ViewBag.Title = "AddCarList";
 }
 
-<h2>Add cars</h2>
+<h2>Drag and drop car list</h2>
 
 
 <style type="text/css">
     #dropSection {
         background: gray;
         border: black dashed 3px;
-        width: 200px;
-        padding: 50px;
+        width: 600px;
+        height: 300px;
         text-align: center;
         color: white;
     }
@@ -22,20 +22,22 @@
     }
 
     .active {
-        background-color: yellow !important;
+        background-color: orange !important;
     }
 </style>
 
-<div id="dropSection">
-</div>
-<br />
+<div style="text-align:center">
+    <div id="dropSection" style="text-align:center">
+    </div>
+    <br />
     Uploaded Files:
-<hr />
-<div id="uploadedFiles">
+    <hr />
+    <div id="uploadedFiles" style="text-align:center">
+    </div>
 </div>
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to List", "Index",null, new { @class = "btn btn-outline-dark btn-sm" })
 </div>
 
 <script type="text/javascript" src='https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.3.min.js'></script>
