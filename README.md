@@ -44,8 +44,8 @@
 
 ### [display charts](https://github.com/paulinaurbas/BD-Car-Dealerships-Managment-System/issues/1)
 1. go to Log in ([`https://localhost:44381/Account/Login`](https://localhost:44381/Account/Login)) tab and login with manager credentials which are ```manager@gmail.com```:```ASDqwe`12```
-2. go to charts ([`https://localhost:44381/charts/index`](https://localhost:44381/charts/index)) to list the available charts
-3. click `sales per date` button
+2. go to charts ([`https://localhost:44381/Charts`](https://localhost:44381/Charts)) to list the available charts
+3. click `SellsPerDate` button
 4. see the chart
 
 ### [adds cars to database using CSV files](https://github.com/paulinaurbas/BD-Car-Dealerships-Managment-System/issues/3)
