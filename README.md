@@ -42,11 +42,17 @@
 4. click `Search` button
 5. see the filtered cars in the salon
 
-### [Display charts](https://github.com/paulinaurbas/BD-Car-Dealerships-Managment-System/issues/1)
+### [display charts](https://github.com/paulinaurbas/BD-Car-Dealerships-Managment-System/issues/1)
 1. go to Log in ([`https://localhost:44381/Account/Login`](https://localhost:44381/Account/Login)) tab and login with manager credentials which are ```manager@gmail.com```:```ASDqwe`12```
-2. go to charts ([`https://localhost:44381/charts/index`](https://localhost:44381/DealershipSalon)) to list the available charts
+2. go to charts ([`https://localhost:44381/charts/index`](https://localhost:44381/charts/index)) to list the available charts
 3. click `sales per date` button
 4. see the chart
+
+### [adds cars to database using CSV files](https://github.com/paulinaurbas/BD-Car-Dealerships-Managment-System/issues/3)
+1. go to Log in ([`https://localhost:44381/Account/Login`](https://localhost:44381/Account/Login)) tab and login with admin credentials which are ```admin@gmail.com```:```ASDqwe`12```
+2. go to charts ([`https://localhost:44381/dealearshipSalon/AddCarList`](https://localhost:44381/DealershipSalon/AddCarList)) to add cars to database using CSV file
+3. drag and drop csv file to the place 
+4. see added cars in the salon 
 
 ## Technology stack
 - .NET
