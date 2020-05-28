@@ -1,0 +1,5 @@
+fiat,multipla,234234,czerwony,1, ,false,1234,1000,1,1,1
+fiat,multipla,12345,czarny,1, ,false,1234,1480,1,2,2
+fiat,multipla,4321,czerwony,1, ,false,1234,1500,2,2,1
+fiat,multipla,4321,zielony,1, ,false,1234,1300,1,2,1
+fiat,multipla,4321,niebieski,1, ,false,1234,1700,1,2,2

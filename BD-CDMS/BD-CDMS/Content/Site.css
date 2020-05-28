@@ -54,6 +54,10 @@ textarea {
     color: #cf7500;
     text-align: center;
     height: 70px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    margin-bottom: 50px;
 }
 
 .btn-outline-primary {

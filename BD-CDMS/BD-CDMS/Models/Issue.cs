@@ -11,12 +11,14 @@ namespace BD_CDMS.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Issue
     {
         public int Id { get; set; }
         public int IdCar { get; set; }
         public string IdServiceman { get; set; }
+        [Required, StringLength(50)]
         public string Description { get; set; }
         public bool IsReady { get; set; }
     
