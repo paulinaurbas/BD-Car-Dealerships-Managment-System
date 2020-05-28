@@ -11,7 +11,8 @@ namespace BD_CDMS.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class DealershipSalon
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -23,9 +24,13 @@ namespace BD_CDMS.Models
         }
     
         public int Id { get; set; }
+        [Required, Phone]
         public string PhoneNumber { get; set; }
+        [Required, StringLength(50)]
         public string Address { get; set; }
+        [Required, EmailAddress]
         public string Email { get; set; }
+        [Required, StringLength(50)]
         public string Name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

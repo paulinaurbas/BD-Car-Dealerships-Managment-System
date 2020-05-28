@@ -3,17 +3,22 @@
 @{
     ViewBag.Title = "Index";
 }
+<div style="position: relative; margin-bottom: 100px;">
+    <div style="">
+        <h2 style="position: absolute; left: 0; top: 0; margin-bottom: 50px" class="title">Features</h2>
 
-<h2>Features</h2>
-
-@{
-    if (System.Web.HttpContext.Current.User.IsInRole("Admin") || System.Web.HttpContext.Current.User.IsInRole("Serviceman"))
+        @{
+            if (System.Web.HttpContext.Current.User.IsInRole("Admin") || System.Web.HttpContext.Current.User.IsInRole("Serviceman"))
     {
-        <p>
-            @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-success" })
-        </p>
-    }
-}
+                <div style="position: absolute; right: 0; margin-bottom: 40px; margin-top: 20px; padding: 5px; text-align: right">
+                            <p>
+                                @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-success" })
+                            </p>
+                </div>
+            }
+        }
+    </div>
+</div>
 <table class="table">
     <tr>
         <th>

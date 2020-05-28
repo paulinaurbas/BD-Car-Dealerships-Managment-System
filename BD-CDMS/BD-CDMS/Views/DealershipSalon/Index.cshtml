@@ -3,167 +3,172 @@
 @{
     ViewBag.Title = "Offers";
 }
+    <div style="position: relative; margin-bottom: 50px;">
+        <div style="">
+            <h2 style="position: absolute; left: 0; top: 0; margin-bottom: 50px" class="title">Offers</h2>
 
-<h2 class="title">Offers</h2>
-
-@{
-    if (System.Web.HttpContext.Current.User.IsInRole("Admin") || System.Web.HttpContext.Current.User.IsInRole("Manager"))
-    {
-        <p>
-            @Html.ActionLink("Add New Car", "Create", null, new { @class = "btn btn-success" })
-            @Html.ActionLink("Add List of Cars", "AddCarList", null, new { @class = "btn btn-success" })
-        </p>
-    }
-}
-
-
-<p>
-    <div>
-        @Html.DropDownList("searchEngine", "Select Engine")&emsp; &emsp; &emsp;
-        @Html.DropDownList("searchCarType", "Select CarType")&emsp; &emsp; &emsp;
-        @Html.DropDownList("searchGearbox", "Select Gearbox")&emsp; &emsp; &emsp;
-
-    </div>
-    <br />
-    <div>
-        Find by salon name: &emsp; @Html.TextBox("searchSalon") &emsp; &emsp; &emsp;
-        Min prise: <input type="number" name="searchMinPrice" value="@ViewBag.searchMinPrice" step="0.01" id="searchMinPrice" /> &emsp; &emsp;
-        Max prise: <input type="number" name="searchMaxPrice" value="@ViewBag.searchMaxPrice" step="0.01" id="searchMaxPrice" /> &emsp; &emsp;
-    </div>
-    <br />
-    <div>
-        Find by color: &emsp; &emsp; &emsp; @Html.TextBox("searchColor") &emsp; &emsp;
-        Find by brand: @Html.TextBox("searchBrand")&emsp; &emsp;
-        Find by model: @Html.TextBox("searchModel")&emsp; &emsp;
-    </div>
-
-</p>
-
-
-
-<table class="table" id="resultsTable">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Brand)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Model)
-        </th>
-        @*<th>
-                @Html.DisplayNameFor(model => model.VIN)
-            </th>*@
-        <th>
-            @Html.DisplayNameFor(model => model.Color)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Price)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DealershipSalon.Name)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Brand)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Model)
-            </td>
-            @*<td>
-                    @Html.DisplayFor(modelItem => item.VIN)
-                </td>*@
-            <td>
-                @Html.DisplayFor(modelItem => item.Color)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DealershipSalon.Name)
-            </td>
-            <td>
-                @{
-                    if (System.Web.HttpContext.Current.User.IsInRole("Admin"))
-                    {
-                        @Html.ActionLink("Create Order", "Create", "Orders", null, new { @class = "btn btn-outline-success btn-sm" })
-                        @Html.ActionLink("Create Person", "CreateOrder", "People", null, new { @class = "btn btn-outline-success btn-sm" })
-                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-outline-warning btn-sm" })
-                        @Html.ActionLink("Features", "IndexCar", "Features", new { id = item.Id }, new { @class = "btn btn-outline-primary btn-sm" })
-                        @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-outline-info btn-sm" })
-                        @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-outline-danger btn-sm" })
-
-                    }
-
-                    if (System.Web.HttpContext.Current.User.IsInRole("Manager"))
-                    {
-                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-outline-warning btn-sm" })
-                        @Html.ActionLink("Features", "IndexCar", "Features", new { id = item.Id }, new { @class = "btn btn-outline-primary btn-sm" })
-                        @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-outline-info btn-sm" })
-                        @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-outline-danger btn-sm" })
-                    }
-                    if (System.Web.HttpContext.Current.User.IsInRole("Seller"))
-                    {
-                        @Html.ActionLink("Create Order", "Create", "Orders", null, new { @class = "btn btn-outline-success btn-sm" })
-                        @Html.ActionLink("Create Person", "CreateOrder", "People", null, new { @class = "btn btn-outline-success btn-sm" })
-                        @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-outline-info btn-sm" })
-                        @Html.ActionLink("Features", "IndexCar", "Features", new { id = item.Id }, new { @class = "btn btn-outline-primary btn-sm" })
-                    }
-
-                    if (System.Web.HttpContext.Current.User.IsInRole("Serviceman"))
-                    {
-                        @Html.ActionLink("Features", "IndexCar", "Features", new { id = item.Id }, new { @class = "btn btn-outline-primary btn-sm" })
-                    }
+            @{
+                if (System.Web.HttpContext.Current.User.IsInRole("Admin") || System.Web.HttpContext.Current.User.IsInRole("Manager"))
+                {
+                        <div style="position: absolute; right: 0; margin-top: 20px; padding: 5px; text-align: right">
+                            <p>
+                                @Html.ActionLink("Add New Car", "Create", null, new { @class = "btn btn-success" })
+                                @Html.ActionLink("Add List of Cars", "AddCarList", null, new { @class = "btn btn-success" })
+                            </p>
+                        </div>
                 }
-            </td>
-        </tr>
-    }
+            }
+        </div>
+        </div>
+        <br />
+        <br />
+        <p>
+            <div style ="margin-bottom: 10px">
+                @Html.DropDownList("searchEngine", "Select Engine")&emsp; &emsp; &emsp;
+                @Html.DropDownList("searchCarType", "Select CarType")&emsp; &emsp; &emsp;
+                @Html.DropDownList("searchGearbox", "Select Gearbox")&emsp; &emsp; &emsp;
 
-</table>
+            </div>
+            <br />
+            <div>
+                Find by salon name: &emsp; @Html.TextBox("searchSalon") &emsp; &emsp; &emsp;
+                Min prise: <input type="number" name="searchMinPrice" value="@ViewBag.searchMinPrice" step="0.01" id="searchMinPrice" /> &emsp; &emsp;
+                Max prise: <input type="number" name="searchMaxPrice" value="@ViewBag.searchMaxPrice" step="0.01" id="searchMaxPrice" /> &emsp; &emsp;
+            </div>
+            <br />
+            <div style ="margin-bottom: 40px">
+                Find by color: &emsp; &emsp; &emsp; @Html.TextBox("searchColor") &emsp; &emsp;
+                Find by brand: @Html.TextBox("searchBrand")&emsp; &emsp;
+                Find by model: @Html.TextBox("searchModel")&emsp; &emsp;
+            </div>
+
+        </p>
+
+
+
+        <table class="table" id="resultsTable">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Brand)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Model)
+                </th>
+                @*<th>
+                    @Html.DisplayNameFor(model => model.VIN)
+                </th>*@
+                <th>
+                    @Html.DisplayNameFor(model => model.Color)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Price)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DealershipSalon.Name)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Brand)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Model)
+                    </td>
+                    @*<td>
+                        @Html.DisplayFor(modelItem => item.VIN)
+                    </td>*@
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Color)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DealershipSalon.Name)
+                    </td>
+                    <td>
+                        @{
+                            if (System.Web.HttpContext.Current.User.IsInRole("Admin"))
+                            {
+                                @Html.ActionLink("Create Order", "Create", "Orders", null, new { @class = "btn btn-outline-success btn-sm" })
+                                @Html.ActionLink("Create Person", "CreateOrder", "People", null, new { @class = "btn btn-outline-success btn-sm" })
+                                @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-outline-warning btn-sm" })
+                                @Html.ActionLink("Features", "IndexCar", "Features", new { id = item.Id }, new { @class = "btn btn-outline-primary btn-sm" })
+                                @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-outline-info btn-sm" })
+                                @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-outline-danger btn-sm" })
+
+                            }
+
+                            if (System.Web.HttpContext.Current.User.IsInRole("Manager"))
+                            {
+                                @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-outline-warning btn-sm" })
+                                @Html.ActionLink("Features", "IndexCar", "Features", new { id = item.Id }, new { @class = "btn btn-outline-primary btn-sm" })
+                                @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-outline-info btn-sm" })
+                                @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-outline-danger btn-sm" })
+                            }
+                            if (System.Web.HttpContext.Current.User.IsInRole("Seller"))
+                            {
+                                @Html.ActionLink("Create Order", "Create", "Orders", null, new { @class = "btn btn-outline-success btn-sm" })
+                                @Html.ActionLink("Create Person", "CreateOrder", "People", null, new { @class = "btn btn-outline-success btn-sm" })
+                                @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-outline-info btn-sm" })
+                                @Html.ActionLink("Features", "IndexCar", "Features", new { id = item.Id }, new { @class = "btn btn-outline-primary btn-sm" })
+                            }
+
+                            if (System.Web.HttpContext.Current.User.IsInRole("Serviceman"))
+                            {
+                                @Html.ActionLink("Features", "IndexCar", "Features", new { id = item.Id }, new { @class = "btn btn-outline-primary btn-sm" })
+                            }
+                        }
+                    </td>
+                </tr>
+            }
+
+        </table>
 
 
 
 
-<script src="~/Scripts/jquery-3.4.1.min.js"></script>
-<script>
-    $(function () {
-        $("#searchSalon,#searchColor,#searchBrand,#searchModel,#searchGearbox,#searchEngine,#searchCarType,#searchMinPrice,#searchMaxPrice").keyup(function (e) {
-            var ss = $("#searchSalon").val();
-            var sc = $("#searchColor").val();
-            var sb = $("#searchBrand").val();
-            var sm = $("#searchModel").val();
-            var sg = $("#searchGearbox").val();
-            var se = $("#searchEngine").val();
-            var sct = $("#searchCarType").val();
-            var sp1 = $("#searchMinPrice").val();
-            var sp2 = $("#searchMaxPrice").val();
+        <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+        <script>
+            $(function () {
+                $("#searchSalon,#searchColor,#searchBrand,#searchModel,#searchGearbox,#searchEngine,#searchCarType,#searchMinPrice,#searchMaxPrice").keyup(function (e) {
+                    var ss = $("#searchSalon").val();
+                    var sc = $("#searchColor").val();
+                    var sb = $("#searchBrand").val();
+                    var sm = $("#searchModel").val();
+                    var sg = $("#searchGearbox").val();
+                    var se = $("#searchEngine").val();
+                    var sct = $("#searchCarType").val();
+                    var sp1 = $("#searchMinPrice").val();
+                    var sp2 = $("#searchMaxPrice").val();
 
-            $.get("/DealershipSalon/Index?searchSalon=" + ss + "&searchColor=" + sc + "&searchBrand=" + sb + "&searchModel=" + sm + "&searchGearbox=" + sg +
-                "&searchEngine=" + se + "&searchCarType=" + sct + "&searchMinPrice=" + sp1 + "&searchMaxPrice=" + sp2, function (data) {
-                    $("#resultsTable").html(data);
+                    $.get("/DealershipSalon/Index?searchSalon=" + ss + "&searchColor=" + sc + "&searchBrand=" + sb + "&searchModel=" + sm + "&searchGearbox=" + sg +
+                        "&searchEngine=" + se + "&searchCarType=" + sct + "&searchMinPrice=" + sp1 + "&searchMaxPrice=" + sp2, function (data) {
+                            $("#resultsTable").html(data);
+                        });
                 });
-        });
 
-        $("#searchGearbox,#searchEngine,#searchCarType").change(function (e) {
-            var ss = $("#searchSalon").val();
-            var sc = $("#searchColor").val();
-            var sb = $("#searchBrand").val();
-            var sm = $("#searchModel").val();
-            var sg = $("#searchGearbox").val();
-            var se = $("#searchEngine").val();
-            var sct = $("#searchCarType").val();
-            var sp1 = $("#searchMinPrice").val();
-            var sp2 = $("#searchMaxPrice").val();
+                $("#searchGearbox,#searchEngine,#searchCarType").change(function (e) {
+                    var ss = $("#searchSalon").val();
+                    var sc = $("#searchColor").val();
+                    var sb = $("#searchBrand").val();
+                    var sm = $("#searchModel").val();
+                    var sg = $("#searchGearbox").val();
+                    var se = $("#searchEngine").val();
+                    var sct = $("#searchCarType").val();
+                    var sp1 = $("#searchMinPrice").val();
+                    var sp2 = $("#searchMaxPrice").val();
 
-            $.get("/DealershipSalon/Index?searchSalon=" + ss + "&searchColor=" + sc + "&searchBrand=" + sb + "&searchModel=" + sm + "&searchGearbox=" + sg +
-                "&searchEngine=" + se + "&searchCarType=" + sct + "&searchMinPrice=" + sp1 + "&searchMaxPrice=" + sp2, function (data) {
-                    $("#resultsTable").html(data);
+                    $.get("/DealershipSalon/Index?searchSalon=" + ss + "&searchColor=" + sc + "&searchBrand=" + sb + "&searchModel=" + sm + "&searchGearbox=" + sg +
+                        "&searchEngine=" + se + "&searchCarType=" + sct + "&searchMinPrice=" + sp1 + "&searchMaxPrice=" + sp2, function (data) {
+                            $("#resultsTable").html(data);
+                        });
                 });
-        });
-    });
+            });
 
 
-</script>
+        </script>
