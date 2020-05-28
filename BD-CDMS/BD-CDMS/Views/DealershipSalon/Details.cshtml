@@ -4,8 +4,16 @@
     ViewBag.Title = "Details";
 }
 <br />
-<h2 class="title">@Html.DisplayFor(model => model.Brand)  @Html.DisplayFor(model => model.Model)</h2>
 
+
+<div style="position: relative; margin-bottom: 50px;">
+    <div style="">
+        <h2 style="position: center; left: 0; top: 0; margin-bottom: 50px" class="title">@Html.DisplayFor(model => model.Brand)  @Html.DisplayFor(model => model.Model)</h2>
+        <br/>
+        <br/>
+
+    </div>
+</div>
 <div>
 
     <ul class="list-inline rent-offer">
@@ -94,17 +102,17 @@
 
             </dl>
 
-        @{
-        @Html.ActionLink("Back to List", "Index",null,  new { @class = "btn btn-outline-dark btn-sm" })
+            @{
+                @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-outline-dark btn-sm" })
 
-            if (System.Web.HttpContext.Current.User.IsInRole("Admin") || System.Web.HttpContext.Current.User.IsInRole("Manager"))
-            {
-                @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-outline-danger btn-sm" })
+                if (System.Web.HttpContext.Current.User.IsInRole("Admin") || System.Web.HttpContext.Current.User.IsInRole("Manager"))
+                {
+                    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-outline-danger btn-sm" })
+                }
             }
-        }
         </li>
-        @*<li class="offer-item offer-image" style="background-image: url('../../images/@Html.DisplayFor(model => model.ImagePath)');" />*@
-        <li class="offer-item offer-image" style="background-image: url('../../Images/McLaren1.png');" />
+        <li class="offer-item offer-image" style="background-image: url('../../Images/@Html.DisplayFor(model => model.ImagePath)');" />
+        @*<li class="offer-item offer-image" style="background-image: url('../../Images/McLaren1.png');" />*@
     </ul>
     <p>
     </p>
