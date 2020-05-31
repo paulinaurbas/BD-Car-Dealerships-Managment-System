@@ -54,6 +54,10 @@
 3. drag and drop csv file to the place 
 4. see added cars in the salon 
 
+### [display help](https://github.com/paulinaurbas/BD-Car-Dealerships-Managment-System/issues/22)
+1. as any user hover cursor over objects that you need help with
+2. a small pop-up window will appear with tips
+
 ## Technology stack
 - .NET
 - VS2019
