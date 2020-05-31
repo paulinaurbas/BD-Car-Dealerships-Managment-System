@@ -61,10 +61,16 @@
 4. see generated PDF
 
 ## Technology stack
-- .NET
-- VS2019
-- C#
-- SQLServer
+- ASP.NET
+- C# 
+- SQLServer 
+- Entity Framework 
+- jQuery 
+- Java Script 
+- AJAX 
+- LinQ 
+- ADO.NET
+
 
 ## Team
 - [Dominik Bistyga](https://github.com/dominikbis)
