@@ -47,6 +47,18 @@ namespace BD_CDMS.Controllers
         // GET: Orders/Create
         public ActionResult Create()
         {
+            Dictionary<int, string> status = new Dictionary<int, string>();//temp
+            status.Add(1, "Ready");
+            status.Add(2, "In progress");
+
+            var statusList = status.Select(n => new
+            {
+                Id = n.Key,
+                Value = n.Value
+            });
+            ViewBag.Status = new SelectList(statusList, "Id", "Value");//temp
+
+
             var customers = _db.Person.Select(c => new
             {
                 Id = c.Id,
@@ -81,6 +93,15 @@ namespace BD_CDMS.Controllers
             order.IdSeller = System.Web.HttpContext.Current.User.Identity.GetUserId().ToString();
             order.Date = DateTime.Now;
 
+            if (order.Status == "1")//temp
+            {
+                order.Status = "Ready";
+            }
+            else if (order.Status == "2")
+            {
+                order.Status = "In progress";
+            }//temp
+
             if (ModelState.IsValid)
             {
                 _db.Order.Add(order);
@@ -97,9 +118,35 @@ namespace BD_CDMS.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.IdSeller = new SelectList(_db.AspNetUsers, "Id", "Email", order.IdSeller);
-            ViewBag.IdCar = new SelectList(_db.Car, "Id", "Brand", order.IdCar);
-            ViewBag.IdCustomer = new SelectList(_db.Person, "Id", "Name", order.IdCustomer);
+            Dictionary<int, string> status = new Dictionary<int, string>();//temp
+            status.Add(1, "Ready");
+            status.Add(2, "In progress");
+
+            var statusList = status.Select(n => new
+            {
+                Id = n.Key,
+                Value = n.Value
+            });
+            ViewBag.Status = new SelectList(statusList, "Id", "Value");//temp
+
+            var customers = _db.Person.Select(c => new
+            {
+                Id = c.Id,
+                Description = c.Name + " " + c.Surname
+            }).ToList();
+
+            var cars = _db.Car.Select(n => new
+            {
+                Id = n.Id,
+                IdSold = n.IdSold,
+                Description = n.Brand + " " + n.Model + " VIN: " + n.VIN
+            }).Where(c => c.IdSold == false).ToList();
+
+
+            ViewBag.IdCustomer = new SelectList(customers, "Id", "Description");
+            ViewBag.IdCar = new SelectList(cars, "Id", "Description");
+
+            ViewBag.IdSeller = new SelectList(_db.AspNetUsers, "Id", "Email");
 
             return View(order);
         }
