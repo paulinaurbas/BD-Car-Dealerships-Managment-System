@@ -11,7 +11,7 @@
             if (System.Web.HttpContext.Current.User.IsInRole("Admin") || System.Web.HttpContext.Current.User.IsInRole("Manager"))
             {
                 <div style="position: absolute; right: 0; margin-top: 20px;  margin-bottom: 100px; padding: 5px; text-align: right">
-                            <p>
+                            <p data-toggle="popover" data-trigger="hover" title="Click to add new issue for some car">
                                 @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-success" })
                             </p>
                 </div>
@@ -56,10 +56,12 @@
                 @{
                     if (System.Web.HttpContext.Current.User.IsInRole("Admin") || System.Web.HttpContext.Current.User.IsInRole("Serviceman"))
                     {
-
-                        @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-outline-info btn-sm" })
-                        @Html.ActionLink("Reserve", "Reserve", new { id = item.Id }, new { @class = "btn btn-outline-secondary btn-sm" })
-
+                        <p>
+                            @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-outline-info btn-sm" })
+                            <text data-toggle="popover" data-trigger="hover" title="Click to reserve issue">
+                                @Html.ActionLink("Reserve", "Reserve", new { id = item.Id }, new { @class = "btn btn-outline-secondary btn-sm" })
+                            </text>
+                        </p>
                     }
 
                     if (System.Web.HttpContext.Current.User.IsInRole("Admin"))

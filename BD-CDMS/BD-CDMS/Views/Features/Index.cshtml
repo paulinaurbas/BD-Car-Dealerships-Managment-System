@@ -9,11 +9,11 @@
 
         @{
             if (System.Web.HttpContext.Current.User.IsInRole("Admin") || System.Web.HttpContext.Current.User.IsInRole("Serviceman"))
-    {
+            {
                 <div style="position: absolute; right: 0; margin-bottom: 40px; margin-top: 20px; padding: 5px; text-align: right">
-                            <p>
-                                @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-success" })
-                            </p>
+                    <p data-toggle="popover" data-trigger="hover" title="Add new feature to car">
+                        @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-success" })
+                    </p>
                 </div>
             }
         }
@@ -67,3 +67,4 @@
     }
 
 </table>
+

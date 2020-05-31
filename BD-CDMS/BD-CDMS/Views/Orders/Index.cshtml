@@ -11,7 +11,7 @@
                  if (System.Web.HttpContext.Current.User.IsInRole("Admin") || System.Web.HttpContext.Current.User.IsInRole("Seller") )
     {
                     <div style="position: absolute; right: 0; margin-bottom: 40px; margin-top: 20px; padding: 5px; text-align: right">
-                                    <p>
+                                    <p data-toggle="popover" data-trigger="hover" title="Click to add new order for some car">
                                         @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-success" })
                                     </p>
                     </div>

@@ -12,8 +12,12 @@
                 {
                         <div style="position: absolute; right: 0; margin-top: 20px; padding: 5px; text-align: right">
                             <p>
-                                @Html.ActionLink("Add New Car", "Create", null, new { @class = "btn btn-success" })
-                                @Html.ActionLink("Add List of Cars", "AddCarList", null, new { @class = "btn btn-success" })
+                                <text data-toggle="popover" data-trigger="hover" title="Click to open the wizard to add a new car">
+                                    @Html.ActionLink("Add New Car", "Create", null, new { @class = "btn btn-success" })
+                                </text>
+                                <text data-toggle="popover" data-trigger="hover" title="Click to open the page to add several cars using the csv list">
+                                    @Html.ActionLink("Add List of Cars", "AddCarList", null, new { @class = "btn btn-success" })
+                                </text>
                             </p>
                         </div>
                 }
@@ -95,33 +99,60 @@
                         @{
                             if (System.Web.HttpContext.Current.User.IsInRole("Admin"))
                             {
-                                @Html.ActionLink("Create Order", "Create", "Orders", null, new { @class = "btn btn-outline-success btn-sm" })
-                                @Html.ActionLink("Create Person", "CreateOrder", "People", null, new { @class = "btn btn-outline-success btn-sm" })
-                                @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-outline-warning btn-sm" })
-                                @Html.ActionLink("Features", "IndexCar", "Features", new { id = item.Id }, new { @class = "btn btn-outline-primary btn-sm" })
-                                @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-outline-info btn-sm" })
-                                @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-outline-danger btn-sm" })
-
+                                <p>
+                                    <text data-toggle="popover" data-trigger="hover" title="Click to create a new order for this car">
+                                        @Html.ActionLink("Create Order", "Create", "Orders", null, new { @class = "btn btn-outline-success btn-sm" })
+                                    </text>
+                                    <text data-toggle="popover" data-trigger="hover" title="Click to add a new customer to the database, and then create a new order for this car">
+                                        @Html.ActionLink("Create Person", "CreateOrder", "People", null, new { @class = "btn btn-outline-success btn-sm" })
+                                    </text>
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-outline-warning btn-sm" })
+                                    <text data-toggle="popover" data-trigger="hover" title="Click to display all features for this car">
+                                        @Html.ActionLink("Features", "IndexCar", "Features", new { id = item.Id }, new { @class = "btn btn-outline-primary btn-sm" })
+                                    </text>
+                                    <text data-toggle="popover" data-trigger="hover" title="Click to display all details for this car">
+                                        @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-outline-info btn-sm" })
+                                    </text>
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-outline-danger btn-sm" })
+                                </p>
                             }
 
                             if (System.Web.HttpContext.Current.User.IsInRole("Manager"))
                             {
-                                @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-outline-warning btn-sm" })
-                                @Html.ActionLink("Features", "IndexCar", "Features", new { id = item.Id }, new { @class = "btn btn-outline-primary btn-sm" })
-                                @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-outline-info btn-sm" })
-                                @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-outline-danger btn-sm" })
+                                <p>
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-outline-warning btn-sm" })
+                                    <text data-toggle="popover" data-trigger="hover" title="Click to display all features for this car">
+                                        @Html.ActionLink("Features", "IndexCar", "Features", new { id = item.Id }, new { @class = "btn btn-outline-primary btn-sm" })
+                                    </text>
+                                    <text data-toggle="popover" data-trigger="hover" title="Click to display all details for this car">
+                                        @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-outline-info btn-sm" })
+                                    </text>
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-outline-danger btn-sm" })
+                                </p>
                             }
                             if (System.Web.HttpContext.Current.User.IsInRole("Seller"))
                             {
-                                @Html.ActionLink("Create Order", "Create", "Orders", null, new { @class = "btn btn-outline-success btn-sm" })
-                                @Html.ActionLink("Create Person", "CreateOrder", "People", null, new { @class = "btn btn-outline-success btn-sm" })
-                                @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-outline-info btn-sm" })
-                                @Html.ActionLink("Features", "IndexCar", "Features", new { id = item.Id }, new { @class = "btn btn-outline-primary btn-sm" })
+                                <p>
+                                    <text data-toggle="popover" data-trigger="hover" title="Click to create a new order for this car">
+                                        @Html.ActionLink("Create Order", "Create", "Orders", null, new { @class = "btn btn-outline-success btn-sm" })
+                                    </text>
+                                    <text data-toggle="popover" data-trigger="hover" title="Click to add a new customer to the database, and then create a new order for this car">
+                                        @Html.ActionLink("Create Person", "CreateOrder", "People", null, new { @class = "btn btn-outline-success btn-sm" })
+                                    </text>
+                                    <text data-toggle="popover" data-trigger="hover" title="Click to display all features for this car">
+                                        @Html.ActionLink("Features", "IndexCar", "Features", new { id = item.Id }, new { @class = "btn btn-outline-primary btn-sm" })
+                                    </text>
+                                    <text data-toggle="popover" data-trigger="hover" title="Click to display all details for this car">
+                                        @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-outline-info btn-sm" })
+                                    </text>
+                                </p>
                             }
 
                             if (System.Web.HttpContext.Current.User.IsInRole("Serviceman"))
                             {
-                                @Html.ActionLink("Features", "IndexCar", "Features", new { id = item.Id }, new { @class = "btn btn-outline-primary btn-sm" })
+                                <p data-toggle="popover" data-trigger="hover" title="Click to display all features for this car">
+                                    @Html.ActionLink("Features", "IndexCar", "Features", new { id = item.Id }, new { @class = "btn btn-outline-primary btn-sm" })
+                                </p>
                             }
                         }
                     </td>

@@ -42,9 +42,15 @@
             @Html.DisplayFor(modelItem => item.Car.VIN)
         </td>
         <td>
-            @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-outline-info btn-sm" }) 
-            @Html.ActionLink("Unreserve", "Unreserve", new { id = item.Id }, new { @class = "btn btn-outline-secondary btn-sm" }) 
-            @Html.ActionLink("Ready", "Ready", new { id = item.Id }, new { @class = "btn btn-outline-success btn-sm" })
+            <p>
+                @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-outline-info btn-sm" })
+                <text data-toggle="popover" data-trigger="hover" title="Click to unreserve this issue (issue goes back to the main group)">
+                    @Html.ActionLink("Unreserve", "Unreserve", new { id = item.Id }, new { @class = "btn btn-outline-secondary btn-sm" })
+                </text>
+                <text data-toggle="popover" data-trigger="hover" title="Click to mark this issue as solved">
+                    @Html.ActionLink("Ready", "Ready", new { id = item.Id }, new { @class = "btn btn-outline-success btn-sm" })
+                </text>
+            </p>
 
             @{
                 if (System.Web.HttpContext.Current.User.IsInRole("Admin"))
