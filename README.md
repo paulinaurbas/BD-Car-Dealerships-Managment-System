@@ -17,7 +17,7 @@
 5. see your order in the list of orders
 
 ### [open application with administrator permissions](https://github.com/paulinaurbas/BD-Car-Dealerships-Managment-System/issues/2)
-1. go to Log in ([`https://localhost:44381/Account/Login`](https://localhost:44381/Account/Login)) tab and login with seller credentials which are ```admin@gmail.com```:```ASDqwe`12```
+1. go to Log in ([`https://localhost:44381/Account/Login`](https://localhost:44381/Account/Login)) tab and login with admin credentials which are ```admin@gmail.com```:```ASDqwe`12```
 2. go to whatever tab and have fun being administrator. Now you can create, read, update and delete all the things
 
 ### [send a car to the service to add a feature or fix an issue](https://github.com/paulinaurbas/BD-Car-Dealerships-Managment-System/issues/6)
