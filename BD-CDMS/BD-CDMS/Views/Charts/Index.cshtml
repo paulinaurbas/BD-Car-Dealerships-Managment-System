@@ -3,6 +3,9 @@
     ViewBag.Title = "Charts";
 }
 
+<button class="btn btn-outline-dark btn-sm" onclick="window.print()">Print this page</button>
+@Html.ActionLink("Generate PDF", "CreatePDF", null, new { @class = "btn btn-outline-light btn-sm" })
+
 <div class="navbar-collapse collapse">
     <ul class="nav navbar-nav">
         <li>@Html.ActionLink("SellsPerDate", "Index", new { selectedChart = "SellsPerDate" })</li>

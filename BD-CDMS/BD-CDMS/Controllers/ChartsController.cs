@@ -10,10 +10,10 @@ using System.Web.Helpers;
 using System.Web.Mvc;
 using BD_CDMS.Models;
 using Microsoft.AspNet.Identity;
+using Rotativa;
 
 namespace BD_CDMS.Controllers
 {
-    [Authorize(Roles = "Admin,Manager")]
     public class ChartsController : Controller
     {
         private Entities db = new Entities();
@@ -114,6 +114,14 @@ namespace BD_CDMS.Controllers
             ViewBag.chart = chart;
 
             return View("Chart");
+        }
+
+
+        public ActionResult CreatePDF()
+        {
+            var report = new ViewAsPdf("CreatePDF");
+
+            return report;
         }
 
     }
