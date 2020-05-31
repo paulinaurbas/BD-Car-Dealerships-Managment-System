@@ -50,15 +50,27 @@
 
 ### [adds cars to database using CSV files](https://github.com/paulinaurbas/BD-Car-Dealerships-Managment-System/issues/3)
 1. go to Log in ([`https://localhost:44381/Account/Login`](https://localhost:44381/Account/Login)) tab and login with admin credentials which are ```admin@gmail.com```:```ASDqwe`12```
-2. go to charts ([`https://localhost:44381/dealearshipSalon/AddCarList`](https://localhost:44381/DealershipSalon/AddCarList)) to add cars to database using CSV file
+2. go to car list ([`https://localhost:44381/dealearshipSalon/AddCarList`](https://localhost:44381/DealershipSalon/AddCarList)) to add cars to database using CSV file
 3. drag and drop csv file to the place 
 4. see added cars in the salon 
 
+### [generate PDF with charts](https://github.com/paulinaurbas/BD-Car-Dealerships-Managment-System/issues/21)
+1. go to Log in ([`https://localhost:44381/Account/Login`](https://localhost:44381/Account/Login)) tab and login with manager credentials which are ```manager@gmail.com```:```ASDqwe`12```
+2. go to charts ([`https://localhost:44381/Charts`](https://localhost:44381/Charts)) to list the available charts
+3. click `Generate PDF`
+4. see generated PDF
+
 ## Technology stack
-- .NET
-- VS2019
-- C#
-- SQLServer
+- ASP.NET
+- C# 
+- SQLServer 
+- Entity Framework 
+- jQuery 
+- Java Script 
+- AJAX 
+- LinQ 
+- ADO.NET
+
 
 ## Team
 - [Dominik Bistyga](https://github.com/dominikbis)
