@@ -54,7 +54,7 @@
 3. drag and drop csv file to the place 
 4. see added cars in the salon 
 
-### [Generate PDF with charts](https://github.com/paulinaurbas/BD-Car-Dealerships-Managment-System/issues/21)
+### [generate PDF with charts](https://github.com/paulinaurbas/BD-Car-Dealerships-Managment-System/issues/21)
 1. go to Log in ([`https://localhost:44381/Account/Login`](https://localhost:44381/Account/Login)) tab and login with manager credentials which are ```manager@gmail.com```:```ASDqwe`12```
 2. go to charts ([`https://localhost:44381/Charts`](https://localhost:44381/Charts)) to list the available charts to add cars to database using CSV file
 3. click `Generate PDF`
