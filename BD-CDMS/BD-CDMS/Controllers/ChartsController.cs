@@ -19,6 +19,7 @@ namespace BD_CDMS.Controllers
         private Entities db = new Entities();
 
         // GET: Charts
+        [Authorize(Roles = "Admin,Manager")]
         public ActionResult Index(string selectedChart)
         {
             ViewBag.selectedChart = selectedChart;
